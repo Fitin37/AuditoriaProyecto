@@ -1,0 +1,42 @@
+GUIA RAPIDA DE LA RUBRICA C#
+===========================
+
+5. LONGITUD DE CONTROLES
+   Se usa MaxLength segun los VARCHAR de SQL en FrmNuevoRegistro.cs.
+
+6. CARACTERES ADMITIDOS
+   ValidarCaracter permite letras, numeros, DUI, telefono y decimales segun
+   la naturaleza de cada campo.
+
+7. INFORMACION NECESARIA
+   Los campos NOT NULL se marcan obligatorios. Correo y descripcion pueden
+   quedar vacios porque en SQL permiten NULL.
+
+8. DASHBOARD
+   Los formularios hijos se abren con DockStyle.Fill y se cierra el anterior
+   para evitar que se sobrepongan.
+
+9. TABINDEX
+   Los controles dinamicos reciben TabIndex consecutivo. Login tambien tiene
+   orden Usuario, Contraseña e Ingresar.
+
+10. FECHAS
+    Se usan DateTimePicker. FechaFin debe superar FechaInicio; una cita no
+    puede estar en el pasado; venta, pago y registro no pueden estar a futuro.
+
+11. COMANDOS
+    BloquearPortapapeles restringe Ctrl+C, Ctrl+V y Ctrl+X.
+
+12. LOGIN Y CONTRASEÑAS
+    Usuario.Guardar y Usuario.Actualizar generan hash con BCrypt.Net-Next.
+    FrmLogin verifica la contraseña con BCrypt.Verify y obtiene el rol con
+    INNER JOIN.
+
+13. CRUD Y SEARCH
+    Las nueve entidades tienen Listar, Obtener, Guardar, Actualizar y Eliminar.
+    Los nueve formularios incluyen busqueda y el boton Editar carga el registro
+    seleccionado para actualizarlo.
+
+14. BASE NORMALIZADA
+    SQL_FINAL_NORMALIZADO.sql crea 15 tablas relacionadas. Los catalogos evitan
+    repetir textos y las consultas usan INNER JOIN sin duplicar filas.

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7D8F2668-DB64-4B7F-8C2B-EE96BDB05E84}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>vistaa</RootNamespace>
+    <AssemblyName>vistaa</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BCrypt.Net-Next">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net462\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="Guna.UI2, Version=2.0.4.8, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.8\lib\net472\Guna.UI2.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DashboardAdmin\FrmDashboardAdministrador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DashboardAdmin\FrmDashboardAdministrador.Designer.cs">
+      <DependentUpon>FrmDashboardAdministrador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardAgente\FrmDashboardAgente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DashboardAgente\FrmDashboardAgente.Designer.cs">
+      <DependentUpon>FrmDashboardAgente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardCliente\FrmDashboardCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DashboardCliente\FrmDashboardCliente.Designer.cs">
+      <DependentUpon>FrmDashboardCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmAgentes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmAgentes.Designer.cs">
+      <DependentUpon>FrmAgentes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmAlquileres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmAlquileres.Designer.cs">
+      <DependentUpon>FrmAlquileres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmClientes.Designer.cs">
+      <DependentUpon>FrmClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmPropiedades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmPropiedades.Designer.cs">
+      <DependentUpon>FrmPropiedades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmVentas.Designer.cs">
+      <DependentUpon>FrmVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmPagos.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="GestioneNova\FrmPagos.Designer.cs"><DependentUpon>FrmPagos.cs</DependentUpon></Compile>
+    <Compile Include="GestioneNova\FrmCitas.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="GestioneNova\FrmCitas.Designer.cs"><DependentUpon>FrmCitas.cs</DependentUpon></Compile>
+    <Compile Include="GestioneNova\FrmMantenimientos.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="GestioneNova\FrmMantenimientos.Designer.cs"><DependentUpon>FrmMantenimientos.cs</DependentUpon></Compile>
+    <Compile Include="GestioneNova\FrmUsuarios.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="GestioneNova\FrmUsuarios.Designer.cs"><DependentUpon>FrmUsuarios.cs</DependentUpon></Compile>
+    <Compile Include="GestioneNova\FrmNuevoRegistro.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="GestioneNova\FrmNuevoRegistro.Designer.cs"><DependentUpon>FrmNuevoRegistro.cs</DependentUpon></Compile>
+    <Compile Include="login\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login\FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DashboardAdmin\FrmDashboardAdministrador.resx">
+      <DependentUpon>FrmDashboardAdministrador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DashboardAgente\FrmDashboardAgente.resx">
+      <DependentUpon>FrmDashboardAgente.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="DashboardCliente\FrmDashboardCliente.resx">
+      <DependentUpon>FrmDashboardCliente.cs</DependentUpon>
+    </None>
+    <EmbeddedResource Include="GestioneNova\FrmAgentes.resx">
+      <DependentUpon>FrmAgentes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmAlquileres.resx">
+      <DependentUpon>FrmAlquileres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmClientes.resx">
+      <DependentUpon>FrmClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmPropiedades.resx">
+      <DependentUpon>FrmPropiedades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmVentas.resx">
+      <DependentUpon>FrmVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmPagos.resx"><DependentUpon>FrmPagos.cs</DependentUpon></EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmCitas.resx"><DependentUpon>FrmCitas.cs</DependentUpon></EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmMantenimientos.resx"><DependentUpon>FrmMantenimientos.cs</DependentUpon></EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmUsuarios.resx"><DependentUpon>FrmUsuarios.cs</DependentUpon></EmbeddedResource>
+    <EmbeddedResource Include="login\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\modeloss\modeloss.csproj">
+      <Project>{F5CD4ED1-9612-4B0D-A27B-342A322CB336}</Project>
+      <Name>modeloss</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agreement.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agreement %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menu %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\house.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\realtor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fachada-casa-moderna-contemporaneo-6-1024x683.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fachadas-de-casas-duplex8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\03b1d92b1562ad0fd3debe0295060549.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\double-bed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toilet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fachadas-de-casas-duplex81.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

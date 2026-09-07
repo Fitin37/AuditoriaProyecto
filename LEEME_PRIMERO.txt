@@ -1,0 +1,65 @@
+NOVA INMOBILIARIA - VERSION CORREGIDA SEGUN RUBRICA C#
+======================================================
+
+PASOS OBLIGATORIOS
+------------------
+
+1. Haz una copia de seguridad de la base anterior si quieres conservarla.
+2. Abre SQL Server Management Studio y conectate a SANTITI09\SQLEXPRESS.
+3. Ejecuta SQL_FINAL_NORMALIZADO.sql completo.
+   ADVERTENCIA: este script recrea la base GestionInmobilaria.
+4. Abre NovaInmobiliariaPTC.sln en Visual Studio.
+5. Selecciona Compilar > Recompilar solucion.
+6. Ejecuta el proyecto.
+
+USUARIOS DE PRUEBA
+------------------
+
+Administrador: admin / 2026
+Agente:        agente / 2026
+Cliente:       cliente / 2026
+
+Las tres contraseñas estan almacenadas como hash BCrypt, no como texto plano.
+
+CAMBIOS PRINCIPALES
+-------------------
+
+- Roles, estados, tipos de propiedad, departamentos, municipios y metodos de
+  pago ahora son tablas relacionadas.
+- El codigo de propiedad, usuario, DUI y correos necesarios son unicos.
+- Pagos tiene relacion mediante IdAlquiler, IdMetodoPago e IdEstado.
+- Los listados relacionados usan INNER JOIN y AS para mostrar nombres.
+- Cada Entidad contiene los metodos Listar, Obtener, Guardar, Actualizar y
+  Eliminar.
+- Nuevo y Editar utilizan cuadros combinados y selectores de fecha.
+- Se validan longitudes, campos obligatorios, letras, numeros, DUI, telefono,
+  correo, montos negativos y logica de fechas.
+- Copiar, cortar y pegar estan bloqueados en los campos de mantenimiento.
+- El login consulta la base y verifica BCrypt.
+- El Cliente solamente puede consultar sus apartados; no ve botones para
+  crear, editar o eliminar.
+
+DONDE EXPLICAR CADA PARTE
+------------------------
+
+- Conexion: modeloss/Conexion_DB/Conexion_DB.cs
+- Propiedades de entidades: modeloss/Entidades/*.cs
+- CRUD y consultas INNER JOIN: modeloss/Entidades/CrudEntidades.cs
+- Acceso comun parametrizado: modeloss/Entidades/DatosEntidad.cs
+- Validaciones y formulario de mantenimiento:
+  vistaa/GestioneNova/FrmNuevoRegistro.cs
+- Login y BCrypt: vistaa/login/FrmLogin.cs
+- Base normalizada: SQL_FINAL_NORMALIZADO.sql
+- Datos de prueba: las 15 tablas quedan con un minimo de 17 registros; al final
+  del script aparece una consulta que muestra el total de cada tabla.
+
+IMPORTANTE PARA LA DEFENSA
+-------------------------
+
+No digan solamente que existe una validacion. Demuestren: intentar un numero
+negativo, una fecha incorrecta, un DUI incompleto, un campo obligatorio vacio,
+un codigo repetido y una contraseña incorrecta. Luego muestren un registro
+creado, editado, buscado y eliminado.
+
+El boton Editar abre el registro seleccionado y Guardar ejecuta UPDATE. El
+boton Recargar vuelve a consultar la base para refrescar el DataGridView.
