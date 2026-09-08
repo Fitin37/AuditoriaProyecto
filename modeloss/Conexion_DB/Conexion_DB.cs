@@ -6,7 +6,7 @@ namespace modeloss.Conexion_DB
     public static class Conexion_DB
     {
         // Se usa "localhost" para forzar la conexión directa a la instancia predeterminada local
-        private const string Servidor = "localhost";
+        private const string Servidor = "ELIDIOS \\SQLEXPRESS";
         private const string BaseDeDatos = "GestionInmobiliaria";
 
         public static string CadenaConexion

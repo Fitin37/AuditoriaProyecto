@@ -29,7 +29,7 @@ namespace vistaa.GestioneNova
         private void RefrescarGrid()
         {
 
-            dgvAlquileres.DataSource = Alquiler.Listar();
+            dgvAlquileres.DataSource = Alquiler.ListarAlquiler1();
         }
 
         private void FrmAlquileres_Load(object sender, EventArgs e)
@@ -117,7 +117,7 @@ namespace vistaa.GestioneNova
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            dgvAlquileres.DataSource = Alquiler.Listar(txtBuscarAlquiler.Text.Trim());
+            dgvAlquileres.DataSource = Alquiler.ListarAlquiler(txtBuscarAlquiler.Text.Trim());
         }
     }
 }
