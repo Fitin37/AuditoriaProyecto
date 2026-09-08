@@ -110,13 +110,14 @@ namespace modeloss
             // Administrador: todo
             if (rol.Equals("Administrador", StringComparison.OrdinalIgnoreCase)) return true;
 
+           
             // Agente: puede leer/crear/editar pero no eliminar globalmente
             if (rol.Equals("Agente", StringComparison.OrdinalIgnoreCase))
             {
                 if (acc == "eliminar") return false;
                 if (string.IsNullOrWhiteSpace(tabla)) return acc != "eliminar";
                 string t = tabla.ToLowerInvariant();
-                if (t.Contains("propiedad") || t.Contains("cliente") || t.Contains("venta") || t.Contains("alquiler") || t.Contains("pago"))
+                if (t.Contains("propiedad") || t.Contains("cliente") || t.Contains("venta") || t.Contains("alquiler") || t.Contains("pago") || t.Contains("agente") || t.Contains("mantenimiento"))
                     return acc == "leer" || acc == "crear" || acc == "editar";
                 return acc == "leer";
             }

@@ -165,6 +165,7 @@ GO
 
 INSERT Roles(Nombre) VALUES ('Administrador'),('Agente'),('Cliente');
 INSERT Roles(Nombre) VALUES ('Gerente'),('Supervisor'),('Recepcionista'),('Contador'),('Cajero'),('Asesor'),('Auditor'),('Soporte'),('Mantenimiento'),('Propietario'),('Arrendador'),('Vendedor'),('Consultor'),('Invitado');
+
 INSERT Estados(TipoEntidad,Nombre) VALUES
 ('Usuario','Activo'),('Usuario','Inactivo'),('Agente','Activo'),('Agente','Inactivo'),
 ('Cliente','Activo'),('Cliente','Inactivo'),
@@ -172,10 +173,13 @@ INSERT Estados(TipoEntidad,Nombre) VALUES
 ('Pago','Pendiente'),('Pago','Pagado'),('Pago','Anulado'),
 ('Cita','Pendiente'),('Cita','Confirmada'),('Cita','Realizada'),('Cita','Cancelada'),
 ('Mantenimiento','Pendiente'),('Mantenimiento','En proceso'),('Mantenimiento','Finalizado');
+
 INSERT TiposPropiedad(Nombre) VALUES ('Casa'),('Apartamento'),('Terreno'),('Local comercial');
 INSERT TiposPropiedad(Nombre) VALUES ('Oficina'),('Bodega'),('Edificio'),('Quinta'),('Finca'),('Rancho'),('Casa de playa'),('Condominio'),('Duplex'),('Penthouse'),('Habitacion'),('Parqueo'),('Nave industrial');
+
 INSERT Departamentos(Nombre) VALUES ('San Salvador'),('La Libertad'),('Santa Ana'),('San Miguel');
 INSERT Departamentos(Nombre) VALUES ('Ahuachapan'),('Cabanas'),('Chalatenango'),('Cuscatlan'),('La Paz'),('La Union'),('Morazan'),('San Vicente'),('Sonsonate'),('Usulutan'),('Otro'),('Exterior'),('No especificado');
+
 INSERT Municipios(IdDepartamento,Nombre) VALUES
 (1,'San Salvador Centro'),(1,'Soyapango'),(1,'Ilopango'),
 (2,'Santa Tecla'),(2,'Antiguo Cuscatlan'),(2,'Zaragoza'),
@@ -183,38 +187,46 @@ INSERT Municipios(IdDepartamento,Nombre) VALUES
 (5,'Ahuachapan Centro'),(6,'Sensuntepeque'),(7,'Chalatenango Centro'),
 (8,'Cojutepeque'),(9,'Zacatecoluca'),(10,'La Union Centro'),
 (11,'San Francisco Gotera'),(12,'San Vicente Centro');
+
 INSERT MetodosPago(Nombre) VALUES ('Efectivo'),('Transferencia'),('Tarjeta'),('Cheque');
 INSERT MetodosPago(Nombre) VALUES ('Deposito bancario'),('Pago movil'),('Bitcoin'),('PayPal'),('Giro'),('Remesa'),('Debito automatico'),('Credito'),('Vale'),('Orden de pago'),('Pago en linea'),('POS'),('Otro');
 
--- La contraseña inicial de los tres usuarios es: 2026
+-- Contraseña inicial: 2026
 INSERT Usuarios(Nombre,Usuario,Contrasena,IdRol,IdEstado) VALUES
 ('Administrador General','admin','$2b$10$Ie.sUSbIRKujQSBMRCdZoOGMKiAY.Jvd.BqOwV8vsefxjp6ZN/H/m',1,1),
 ('Agente de prueba','agente','$2b$10$4A1LxM2Sv00CMrLvlWEcXuLb62pNnJGysVCNs/LAxb9OfZk9gBwf2',2,1),
 ('Cliente de prueba','cliente','$2b$10$jrbpLtN64qkkDNNmzJz7MOhUHDYTtC8lkKF3nNLqXmwQ4kBjTX2ru',3,1);
 
-INSERT Clientes(Nombres,Apellidos,DUI,Telefono,Correo,Direccion) VALUES
-('Juan Jose','Ramirez Hernandez','01234567-1','7123-4567','juan@gmail.com','San Salvador'),
-('Maria Beatriz','Santos Mejia','02345678-2','7234-5678','maria@gmail.com','Santa Tecla');
+-- CORRECCIÓN: Se agrega IdEstado = 5 ('Cliente', 'Activo')
+INSERT Clientes(Nombres,Apellidos,DUI,Telefono,Correo,Direccion,IdEstado) VALUES
+('Juan Jose','Ramirez Hernandez','01234567-1','7123-4567','juan@gmail.com','San Salvador', 5),
+('Maria Beatriz','Santos Mejia','02345678-2','7234-5678','maria@gmail.com','Santa Tecla', 5);
+
 INSERT Agentes(Nombre,Apellido,Telefono,Correo,Comision,IdEstado) VALUES
 ('Juan','Perez','7123-4567','juan@nova.com',5.00,3),
 ('Maria','Lopez','7234-5678','maria@nova.com',4.50,3);
+
 INSERT Propiedades(Codigo,IdTipoPropiedad,Direccion,IdMunicipio,Precio,IdEstado,Descripcion) VALUES
-('PROP-001',1,'Colonia Escalon, casa 12',1,150000,5,'Casa de dos plantas'),
-('PROP-002',2,'Torre El Pedregal, apartamento 4B',5,220000,5,'Apartamento con tres habitaciones');
+('PROP-001',1,'Colonia Escalon, casa 12',1,150000,7,'Casa de dos plantas'),
+('PROP-002',2,'Torre El Pedregal, apartamento 4B',5,220000,7,'Apartamento con tres habitaciones');
 
 INSERT Ventas(IdCliente,IdPropiedad,IdUsuario,FechaVenta,PrecioVenta)
 VALUES(1,1,1,CAST(GETDATE() AS DATE),150000);
+
 INSERT Alquileres(IdCliente,IdPropiedad,IdUsuario,FechaInicio,FechaFin,PagoMensual)
 VALUES(2,2,2,CAST(GETDATE() AS DATE),DATEADD(YEAR,1,CAST(GETDATE() AS DATE)),1200);
+
 INSERT Pagos(IdAlquiler,FechaPago,Monto,IdMetodoPago,IdEstado)
-VALUES(1,CAST(GETDATE() AS DATE),1200,2,10);
+VALUES(1,CAST(GETDATE() AS DATE),1200,2,12);
+
 INSERT Citas(IdCliente,IdAgente,IdPropiedad,Fecha,Hora,IdEstado)
-VALUES(1,1,2,DATEADD(DAY,7,CAST(GETDATE() AS DATE)),'10:00',12);
+VALUES(1,1,2,DATEADD(DAY,7,CAST(GETDATE() AS DATE)),'10:00',14);
+
 INSERT Mantenimientos(IdPropiedad,Descripcion,Fecha,Costo,IdEstado)
-VALUES(2,'Revision preventiva',CAST(GETDATE() AS DATE),75,16);
+VALUES(2,'Revision preventiva',CAST(GETDATE() AS DATE),75,18);
 GO
 
--- Completar un minimo de 17 registros en cada tabla operativa.
+-- Generar registros iterativos
 DECLARE @i INT = 4;
 WHILE (SELECT COUNT(*) FROM Usuarios) < 17
 BEGIN
@@ -227,8 +239,9 @@ GO
 DECLARE @i INT = 3;
 WHILE (SELECT COUNT(*) FROM Clientes) < 17
 BEGIN
-    INSERT Clientes(Nombres,Apellidos,DUI,Telefono,Correo,Direccion)
-    VALUES('Cliente '+CAST(@i AS VARCHAR),'Apellido '+CAST(@i AS VARCHAR),RIGHT('00000000'+CAST(10000000+@i AS VARCHAR),8)+'-'+CAST(@i%10 AS VARCHAR),'7000-'+RIGHT('0000'+CAST(@i AS VARCHAR),4),'cliente'+CAST(@i AS VARCHAR)+'@correo.com','Direccion del cliente '+CAST(@i AS VARCHAR));
+    -- CORRECCIÓN: Se agrega IdEstado = 5
+    INSERT Clientes(Nombres,Apellidos,DUI,Telefono,Correo,Direccion,IdEstado)
+    VALUES('Cliente '+CAST(@i AS VARCHAR),'Apellido '+CAST(@i AS VARCHAR),RIGHT('00000000'+CAST(10000000+@i AS VARCHAR),8)+'-'+CAST(@i%10 AS VARCHAR),'7000-'+RIGHT('0000'+CAST(@i AS VARCHAR),4),'cliente'+CAST(@i AS VARCHAR)+'@correo.com','Direccion del cliente '+CAST(@i AS VARCHAR), 5);
     SET @i=@i+1;
 END;
 GO
@@ -246,7 +259,7 @@ DECLARE @i INT = 3;
 WHILE (SELECT COUNT(*) FROM Propiedades) < 17
 BEGIN
     INSERT Propiedades(Codigo,IdTipoPropiedad,Direccion,IdMunicipio,Precio,IdEstado,Descripcion,FechaRegistro)
-    VALUES('PROP-'+RIGHT('000'+CAST(@i AS VARCHAR),3),((@i-1)%17)+1,'Direccion de propiedad '+CAST(@i AS VARCHAR),((@i-1)%17)+1,50000+(@i*5000),5,'Propiedad de prueba '+CAST(@i AS VARCHAR),CAST(GETDATE() AS DATE));
+    VALUES('PROP-'+RIGHT('000'+CAST(@i AS VARCHAR),3),((@i-1)%17)+1,'Direccion de propiedad '+CAST(@i AS VARCHAR),((@i-1)%17)+1,50000+(@i*5000),7,'Propiedad de prueba '+CAST(@i AS VARCHAR),CAST(GETDATE() AS DATE));
     SET @i=@i+1;
 END;
 GO
@@ -273,7 +286,7 @@ DECLARE @i INT = 2;
 WHILE (SELECT COUNT(*) FROM Pagos) < 17
 BEGIN
     INSERT Pagos(IdAlquiler,FechaPago,Monto,IdMetodoPago,IdEstado)
-    VALUES(@i,DATEADD(DAY,-(@i%20),CAST(GETDATE() AS DATE)),500+(@i*25),((@i-1)%17)+1,10);
+    VALUES(@i,DATEADD(DAY,-(@i%20),CAST(GETDATE() AS DATE)),500+(@i*25),((@i-1)%17)+1,12);
     SET @i=@i+1;
 END;
 GO
@@ -282,7 +295,7 @@ DECLARE @i INT = 2;
 WHILE (SELECT COUNT(*) FROM Citas) < 17
 BEGIN
     INSERT Citas(IdCliente,IdAgente,IdPropiedad,Fecha,Hora,IdEstado)
-    VALUES(@i,@i,@i,DATEADD(DAY,@i,CAST(GETDATE() AS DATE)),TIMEFROMPARTS(8+(@i%8),0,0,0,0),12);
+    VALUES(@i,@i,@i,DATEADD(DAY,@i,CAST(GETDATE() AS DATE)),TIMEFROMPARTS(8+(@i%8),0,0,0,0),14);
     SET @i=@i+1;
 END;
 GO
@@ -291,15 +304,12 @@ DECLARE @i INT = 2;
 WHILE (SELECT COUNT(*) FROM Mantenimientos) < 17
 BEGIN
     INSERT Mantenimientos(IdPropiedad,Descripcion,Fecha,Costo,IdEstado)
-    VALUES(@i,'Mantenimiento preventivo '+CAST(@i AS VARCHAR),DATEADD(DAY,-(@i%10),CAST(GETDATE() AS DATE)),50+(@i*10),16);
+    VALUES(@i,'Mantenimiento preventivo '+CAST(@i AS VARCHAR),DATEADD(DAY,-(@i%10),CAST(GETDATE() AS DATE)),50+(@i*10),18);
     SET @i=@i+1;
 END;
 GO
 
-/*
-   Sustituir los textos genericos por los datos del SQL original del equipo.
-   Se conservan las llaves y la estructura normalizada de las 15 tablas.
-*/
+-- Actualizaciones de datos especificos
 UPDATE u SET u.Nombre=x.Nombre, u.Usuario=x.Usuario
 FROM Usuarios u INNER JOIN (VALUES
 (1,'Carlos Mendoza','admin'),(2,'Ana Gomez','agente'),(3,'Luis Perez','cliente'),
@@ -358,23 +368,23 @@ FROM Agentes a INNER JOIN (VALUES
 UPDATE p SET p.Codigo=x.Codigo,p.IdTipoPropiedad=x.IdTipo,p.Direccion=x.Direccion,
 p.IdMunicipio=x.IdMunicipio,p.Precio=x.Precio,p.IdEstado=x.IdEstado,p.Descripcion=x.Descripcion
 FROM Propiedades p INNER JOIN (VALUES
-(1,'PROP-001',1,'Av. Las Magnolias #12',1,150000.00,6,'Casa de dos plantas con jardin'),
-(2,'PROP-002',2,'Torre El Pedregal Apto 4B',5,220000.00,7,'Vista panoramica, 3 habitaciones'),
-(3,'PROP-003',3,'Km 25 Carretera al Puerto',6,450000.00,5,'Terreno plano ideal para desarrollo'),
-(4,'PROP-004',1,'Residencial Los Suenos',4,320000.00,6,'Acabados de lujo, piscina privada'),
-(5,'PROP-005',2,'Condominio San Benito',1,1100.00,7,'Amueblado, precio mensual'),
-(6,'PROP-006',3,'Lote 14, Urbanizacion El Sitial',7,35000.00,5,'Acceso a agua y luz electrica'),
-(7,'PROP-007',1,'Colonia Buenos Aires',9,85000.00,6,'Cerca de centros comerciales'),
-(8,'PROP-008',2,'Apartamentos Escalon Vista',1,125000.00,5,'Estreno, cochera para 2 vehiculos'),
-(9,'PROP-009',3,'Playa El Tunco',6,180000.00,5,'Excelente ubicacion turistica'),
-(10,'PROP-010',1,'Paseo General Escalon',1,210000.00,5,'Ideal para oficinas o vivienda'),
-(11,'PROP-011',2,'Torres del Sol',5,950.00,7,'Seguridad 24 horas y areas comunes'),
-(12,'PROP-012',3,'Valle de Jiboa',17,25000.00,5,'Uso agricola o habitacional'),
-(13,'PROP-013',1,'Residencial Pinares de Suiza',4,140000.00,6,'Zona fresca y segura'),
-(14,'PROP-014',2,'Condominio Puerta del Alma',5,1300.00,7,'Moderno, amenidades incluidas'),
-(15,'PROP-015',3,'Cerca de bypass Ahuachapan',10,60000.00,5,'Factibilidad de servicios'),
-(16,'PROP-016',4,'Local comercial Metrocentro',1,185000.00,5,'Local amplio para negocio'),
-(17,'PROP-017',5,'Centro financiero Santa Elena',5,275000.00,5,'Oficina moderna con estacionamiento')
+(1,'PROP-001',1,'Av. Las Magnolias #12',1,150000.00,8,'Casa de dos plantas con jardin'),
+(2,'PROP-002',2,'Torre El Pedregal Apto 4B',5,220000.00,9,'Vista panoramica, 3 habitaciones'),
+(3,'PROP-003',3,'Km 25 Carretera al Puerto',6,450000.00,7,'Terreno plano ideal para desarrollo'),
+(4,'PROP-004',1,'Residencial Los Suenos',4,320000.00,8,'Acabados de lujo, piscina privada'),
+(5,'PROP-005',2,'Condominio San Benito',1,1100.00,9,'Amueblado, precio mensual'),
+(6,'PROP-006',3,'Lote 14, Urbanizacion El Sitial',7,35000.00,7,'Acceso a agua y luz electrica'),
+(7,'PROP-007',1,'Colonia Buenos Aires',9,85000.00,8,'Cerca de centros comerciales'),
+(8,'PROP-008',2,'Apartamentos Escalon Vista',1,125000.00,7,'Estreno, cochera para 2 vehiculos'),
+(9,'PROP-009',3,'Playa El Tunco',6,180000.00,7,'Excelente ubicacion turistica'),
+(10,'PROP-010',1,'Paseo General Escalon',1,210000.00,7,'Ideal para oficinas o vivienda'),
+(11,'PROP-011',2,'Torres del Sol',5,950.00,9,'Seguridad 24 horas y areas comunes'),
+(12,'PROP-012',3,'Valle de Jiboa',17,25000.00,7,'Uso agricola o habitacional'),
+(13,'PROP-013',1,'Residencial Pinares de Suiza',4,140000.00,8,'Zona fresca y segura'),
+(14,'PROP-014',2,'Condominio Puerta del Alma',5,1300.00,9,'Moderno, amenidades incluidas'),
+(15,'PROP-015',3,'Cerca de bypass Ahuachapan',10,60000.00,7,'Factibilidad de servicios'),
+(16,'PROP-016',4,'Local comercial Metrocentro',1,185000.00,7,'Local amplio para negocio'),
+(17,'PROP-017',5,'Centro financiero Santa Elena',5,275000.00,7,'Oficina moderna con estacionamiento')
 )x(IdPropiedad,Codigo,IdTipo,Direccion,IdMunicipio,Precio,IdEstado,Descripcion) ON p.IdPropiedad=x.IdPropiedad;
 
 UPDATE Mantenimientos SET Descripcion=CASE IdMantenimiento
@@ -389,40 +399,7 @@ WHEN 15 THEN 'Inspeccion general de la propiedad' WHEN 16 THEN 'Revision de puer
 WHEN 17 THEN 'Mantenimiento preventivo general' END;
 GO
 
--- Comprobacion de cantidad de registros por tabla.
-SELECT 'Roles' AS Tabla, COUNT(*) AS Registros FROM Roles UNION ALL
-SELECT 'Estados',COUNT(*) FROM Estados UNION ALL SELECT 'TiposPropiedad',COUNT(*) FROM TiposPropiedad UNION ALL
-SELECT 'Departamentos',COUNT(*) FROM Departamentos UNION ALL SELECT 'Municipios',COUNT(*) FROM Municipios UNION ALL
-SELECT 'MetodosPago',COUNT(*) FROM MetodosPago UNION ALL SELECT 'Usuarios',COUNT(*) FROM Usuarios UNION ALL
-SELECT 'Clientes',COUNT(*) FROM Clientes UNION ALL SELECT 'Agentes',COUNT(*) FROM Agentes UNION ALL
-SELECT 'Propiedades',COUNT(*) FROM Propiedades UNION ALL SELECT 'Ventas',COUNT(*) FROM Ventas UNION ALL
-SELECT 'Alquileres',COUNT(*) FROM Alquileres UNION ALL SELECT 'Pagos',COUNT(*) FROM Pagos UNION ALL
-SELECT 'Citas',COUNT(*) FROM Citas UNION ALL SELECT 'Mantenimientos',COUNT(*) FROM Mantenimientos;
-GO
-
-PRINT 'Base GestionInmobiliaria creada y normalizada correctamente.';
-
--- Mostrar el contenido de las 15 tablas al ejecutar el script.
-SELECT * FROM Roles;
-SELECT * FROM Estados;
-SELECT * FROM TiposPropiedad;
-SELECT * FROM Departamentos;
-SELECT * FROM Municipios;
-SELECT * FROM MetodosPago;
-SELECT * FROM Usuarios;
-SELECT * FROM Clientes;
-SELECT * FROM Agentes;
-SELECT * FROM Propiedades;
-SELECT * FROM Ventas;
-SELECT * FROM Alquileres;
-SELECT * FROM Pagos;
-SELECT * FROM Citas;
-SELECT * FROM Mantenimientos;
-GO
-----------------------------------------------------------------
----------------------------------------------------------------
-
-
+-- Vistas
 CREATE VIEW vw_Ventas AS
 SELECT 
     v.IdVenta,
@@ -541,3 +518,30 @@ SELECT
 FROM Agentes ag
 INNER JOIN Estados e ON ag.IdEstado = e.IdEstado;
 GO
+
+-- Comprobación final
+SELECT 'Roles' AS Tabla, COUNT(*) AS Registros FROM Roles UNION ALL
+SELECT 'Estados',COUNT(*) FROM Estados UNION ALL SELECT 'TiposPropiedad',COUNT(*) FROM TiposPropiedad UNION ALL
+SELECT 'Departamentos',COUNT(*) FROM Departamentos UNION ALL SELECT 'Municipios',COUNT(*) FROM Municipios UNION ALL
+SELECT 'MetodosPago',COUNT(*) FROM MetodosPago UNION ALL SELECT 'Usuarios',COUNT(*) FROM Usuarios UNION ALL
+SELECT 'Clientes',COUNT(*) FROM Clientes UNION ALL SELECT 'Agentes',COUNT(*) FROM Agentes UNION ALL
+SELECT 'Propiedades',COUNT(*) FROM Propiedades UNION ALL SELECT 'Ventas',COUNT(*) FROM Ventas UNION ALL
+SELECT 'Alquileres',COUNT(*) FROM Alquileres UNION ALL SELECT 'Pagos',COUNT(*) FROM Pagos UNION ALL
+SELECT 'Citas',COUNT(*) FROM Citas UNION ALL SELECT 'Mantenimientos',COUNT(*) FROM Mantenimientos;
+GO
+
+ALTER TABLE Mantenimientos
+ADD IdUsuario INT NULL
+    CONSTRAINT FK_Mantenimientos_Usuarios FOREIGN KEY REFERENCES Usuarios(IdUsuario);
+
+ALTER TABLE Agentes
+ADD IdUsuario INT NULL
+    CONSTRAINT FK_Agentes_Usuarios FOREIGN KEY REFERENCES Usuarios(IdUsuario);
+
+    SELECT Codigo, COUNT(*) AS Repetidos
+FROM Propiedades
+GROUP BY Codigo
+HAVING COUNT(*) > 1;
+
+ALTER TABLE Propiedades
+ADD CONSTRAINT UQ_Propiedades_Codigo UNIQUE (Codigo);

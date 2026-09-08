@@ -9,5 +9,6 @@ namespace modeloss.Entidades
         public string Correo { get; set; }
         public decimal Comision { get; set; }
         public int IdEstado { get; set; }
+        public int IdUsuario { get; set; }
     }
 }

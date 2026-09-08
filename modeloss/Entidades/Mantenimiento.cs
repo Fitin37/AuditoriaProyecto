@@ -10,5 +10,6 @@ namespace modeloss.Entidades
         public DateTime Fecha { get; set; }
         public decimal Costo { get; set; }
         public int IdEstado { get; set; }
+        public int IdUsuario { get; set; }
     }
 }
