@@ -29,7 +29,7 @@ namespace vistaa.GestioneNova
         private void RefrescarGrid()
         {
 
-            dgvPropiedades.DataSource = Propiedad.Listar();
+            dgvPropiedades.DataSource = Propiedad.ListarPropiedad();
         }
 
         private void FrmPropiedades_Load(object sender, EventArgs e)
@@ -116,7 +116,7 @@ namespace vistaa.GestioneNova
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            dgvPropiedades.DataSource = Propiedad.Listar(txtBuscarPropiedad.Text.Trim());
+            dgvPropiedades.DataSource = Propiedad.ListarPropiedad(txtBuscarPropiedad.Text.Trim());
         }
     }
 }

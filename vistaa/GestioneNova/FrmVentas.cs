@@ -29,7 +29,7 @@ namespace vistaa.GestioneNova
         private void RefrescarGrid()
         {
             
-            dgvVentas.DataSource = Venta.Listar();
+            dgvVentas.DataSource = Venta.ListarVenta();
         }
         private void FrmVentas_Load(object sender, EventArgs e)
         {
@@ -92,7 +92,7 @@ namespace vistaa.GestioneNova
 
                     try
                     {
-                        Venta.Eliminar(idVenta);
+                        Venta.EliminarVenta(idVenta);
                         RefrescarGrid();
                         MessageBox.Show("Registro eliminado correctamente.");
                     }
@@ -117,7 +117,7 @@ namespace vistaa.GestioneNova
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            dgvVentas.DataSource = Venta.Listar(txtBuscarVenta.Text.Trim());
+            dgvVentas.DataSource = Venta.ListarVenta(txtBuscarVenta.Text.Trim());
         }
     }
 }

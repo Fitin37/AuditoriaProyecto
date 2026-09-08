@@ -114,7 +114,7 @@ namespace vistaa.GestioneNova
 
         private DataRow ObtenerRegistro()
         {
-            switch (tipo) { case TipoRegistro.Usuario: return Usuario.Obtener(idEditar); case TipoRegistro.Cliente: return Cliente.Obtener(idEditar); case TipoRegistro.Agente: return Agente.Obtener(idEditar); case TipoRegistro.Propiedad: return Propiedad.Obtener(idEditar); case TipoRegistro.Venta: return Venta.Obtener(idEditar); case TipoRegistro.Alquiler: return Alquiler.Obtener(idEditar); case TipoRegistro.Pago: return Pago.Obtener(idEditar); case TipoRegistro.Cita: return Cita.Obtener(idEditar); default: return Mantenimiento.Obtener(idEditar); }
+            switch (tipo) { case TipoRegistro.Usuario: return Usuario.Obtener(idEditar); case TipoRegistro.Cliente: return Cliente.Obtener(idEditar); case TipoRegistro.Agente: return Agente.Obtener(idEditar); case TipoRegistro.Propiedad: return Propiedad.ObtenerPropiedad(idEditar); case TipoRegistro.Venta: return Venta.ObtenerVenta(idEditar); case TipoRegistro.Alquiler: return Alquiler.ObtenerAlquiler(idEditar); case TipoRegistro.Pago: return Pago.Obtener(idEditar); case TipoRegistro.Cita: return Cita.Obtener(idEditar); default: return Mantenimiento.Obtener(idEditar); }
         }
 
         private void CargarRegistro()
@@ -189,7 +189,7 @@ namespace vistaa.GestioneNova
                     if (e) Propiedad.Actualizar(idEditar, v); else Propiedad.Guardar(v);
                     break;
                 case TipoRegistro.Venta:
-                    if (e) Venta.Actualizar(idEditar, v); else Venta.Guardar(v);
+                    if (e) Venta.ActualizarVenta(idEditar, v); else Venta.GuardarVenta(v);
                     break;
                 case TipoRegistro.Alquiler:
                     if (e) Alquiler.Actualizar(idEditar, v); else Alquiler.Guardar(v);
