@@ -103,16 +103,36 @@
     <Compile Include="GestioneNova\FrmVentas.Designer.cs">
       <DependentUpon>FrmVentas.cs</DependentUpon>
     </Compile>
-    <Compile Include="GestioneNova\FrmPagos.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="GestioneNova\FrmPagos.Designer.cs"><DependentUpon>FrmPagos.cs</DependentUpon></Compile>
-    <Compile Include="GestioneNova\FrmCitas.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="GestioneNova\FrmCitas.Designer.cs"><DependentUpon>FrmCitas.cs</DependentUpon></Compile>
-    <Compile Include="GestioneNova\FrmMantenimientos.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="GestioneNova\FrmMantenimientos.Designer.cs"><DependentUpon>FrmMantenimientos.cs</DependentUpon></Compile>
-    <Compile Include="GestioneNova\FrmUsuarios.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="GestioneNova\FrmUsuarios.Designer.cs"><DependentUpon>FrmUsuarios.cs</DependentUpon></Compile>
-    <Compile Include="GestioneNova\FrmNuevoRegistro.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="GestioneNova\FrmNuevoRegistro.Designer.cs"><DependentUpon>FrmNuevoRegistro.cs</DependentUpon></Compile>
+    <Compile Include="GestioneNova\FrmPagos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmPagos.Designer.cs">
+      <DependentUpon>FrmPagos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmCitas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmCitas.Designer.cs">
+      <DependentUpon>FrmCitas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmMantenimientos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmMantenimientos.Designer.cs">
+      <DependentUpon>FrmMantenimientos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmUsuarios.Designer.cs">
+      <DependentUpon>FrmUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneNova\FrmNuevoRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestioneNova\FrmNuevoRegistro.Designer.cs">
+      <DependentUpon>FrmNuevoRegistro.cs</DependentUpon>
+    </Compile>
     <Compile Include="login\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,16 +159,27 @@
     <EmbeddedResource Include="GestioneNova\FrmClientes.resx">
       <DependentUpon>FrmClientes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmNuevoRegistro.resx">
+      <DependentUpon>FrmNuevoRegistro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GestioneNova\FrmPropiedades.resx">
       <DependentUpon>FrmPropiedades.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GestioneNova\FrmVentas.resx">
       <DependentUpon>FrmVentas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GestioneNova\FrmPagos.resx"><DependentUpon>FrmPagos.cs</DependentUpon></EmbeddedResource>
-    <EmbeddedResource Include="GestioneNova\FrmCitas.resx"><DependentUpon>FrmCitas.cs</DependentUpon></EmbeddedResource>
-    <EmbeddedResource Include="GestioneNova\FrmMantenimientos.resx"><DependentUpon>FrmMantenimientos.cs</DependentUpon></EmbeddedResource>
-    <EmbeddedResource Include="GestioneNova\FrmUsuarios.resx"><DependentUpon>FrmUsuarios.cs</DependentUpon></EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmPagos.resx">
+      <DependentUpon>FrmPagos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmCitas.resx">
+      <DependentUpon>FrmCitas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmMantenimientos.resx">
+      <DependentUpon>FrmMantenimientos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestioneNova\FrmUsuarios.resx">
+      <DependentUpon>FrmUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="login\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>

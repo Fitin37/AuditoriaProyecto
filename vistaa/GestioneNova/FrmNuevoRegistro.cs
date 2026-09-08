@@ -26,9 +26,14 @@ namespace vistaa.GestioneNova
 
         public FrmNuevoRegistro(TipoRegistro tipo, int idEditar = 0)
         {
-            InitializeComponent(); this.tipo = tipo; this.idEditar = idEditar;
-            ConfigurarCampos(); CrearControles(); if (idEditar > 0) CargarRegistro();
-            lblTitulo.Text = (idEditar > 0 ? "Editar " : "Nuevo ") + tipo; Text = lblTitulo.Text;
+            InitializeComponent();
+            this.tipo = tipo;
+            this.idEditar = idEditar;
+            ConfigurarCampos();
+            CrearControles();
+            if (idEditar > 0) CargarRegistro();
+            lblTitulo.Text = (idEditar > 0 ? "Editar " : "Nuevo ") + tipo;
+            Text = lblTitulo.Text;
         }
 
         private void Agregar(string n, string e, string t, int m = 0, bool o = true) { campos.Add(new Campo(n, e, t, m, o)); }
@@ -37,16 +42,87 @@ namespace vistaa.GestioneNova
         {
             switch (tipo)
             {
-                case TipoRegistro.Usuario: Agregar("Nombre", "Nombre", "letras", 100); Agregar("Usuario", "Usuario", "usuario", 50); Agregar("Contrasena", "Contraseña", "clave", 50, idEditar == 0); Agregar("IdRol", "Rol", "rol"); Agregar("IdEstado", "Estado", "estadoUsuario"); break;
-                case TipoRegistro.Cliente: Agregar("Nombres", "Nombres", "letras", 100); Agregar("Apellidos", "Apellidos", "letras", 100); Agregar("DUI", "DUI", "dui", 10); Agregar("Telefono", "Teléfono", "telefono", 20); Agregar("Correo", "Correo", "correo", 100, false); Agregar("Direccion", "Dirección", "texto", 200); break;
-                case TipoRegistro.Agente: Agregar("Nombre", "Nombre", "letras", 100); Agregar("Apellido", "Apellido", "letras", 100); Agregar("Telefono", "Teléfono", "telefono", 20); Agregar("Correo", "Correo", "correo", 100); Agregar("Comision", "Comisión", "decimal"); Agregar("IdEstado", "Estado", "estadoAgente"); break;
-                // SE REMOVIÓ EL CAMPO "Codigo" PARA QUE SE GENERE AUTOMÁTICAMENTE
-                case TipoRegistro.Propiedad: Agregar("IdTipoPropiedad", "Tipo", "tipoPropiedad"); Agregar("Direccion", "Dirección", "texto", 200); Agregar("IdDepartamento", "Departamento", "departamento"); Agregar("IdMunicipio", "Municipio", "municipio"); Agregar("Precio", "Precio", "decimal"); Agregar("IdEstado", "Estado", "estadoPropiedad"); Agregar("Descripcion", "Descripción", "texto", 500, false); Agregar("FechaRegistro", "Fecha de registro", "fecha"); break;
-                case TipoRegistro.Venta: Agregar("IdCliente", "Cliente", "cliente"); Agregar("IdPropiedad", "Propiedad", "propiedad"); Agregar("IdUsuario", "Usuario", "usuarioCombo"); Agregar("FechaVenta", "Fecha de venta", "fecha"); Agregar("PrecioVenta", "Precio de venta", "decimal"); break;
-                case TipoRegistro.Alquiler: Agregar("IdCliente", "Cliente", "cliente"); Agregar("IdPropiedad", "Propiedad", "propiedad"); Agregar("IdUsuario", "Usuario", "usuarioCombo"); Agregar("FechaInicio", "Fecha de inicio", "fecha"); Agregar("FechaFin", "Fecha de finalización", "fecha"); Agregar("PagoMensual", "Pago mensual", "decimal"); break;
-                case TipoRegistro.Pago: Agregar("IdAlquiler", "Alquiler", "alquiler"); Agregar("FechaPago", "Fecha de pago", "fecha"); Agregar("Monto", "Monto", "decimal"); Agregar("IdMetodoPago", "Método de pago", "metodoPago"); Agregar("IdEstado", "Estado", "estadoPago"); break;
-                case TipoRegistro.Cita: Agregar("IdCliente", "Cliente", "cliente"); Agregar("IdAgente", "Agente", "agente"); Agregar("IdPropiedad", "Propiedad", "propiedad"); Agregar("Fecha", "Fecha", "fecha"); Agregar("Hora", "Hora", "hora"); Agregar("IdEstado", "Estado", "estadoCita"); break;
-                default: Agregar("IdPropiedad", "Propiedad", "propiedad"); Agregar("Descripcion", "Descripción", "texto", 200); Agregar("Fecha", "Fecha", "fecha"); Agregar("Costo", "Costo", "decimal"); Agregar("IdEstado", "Estado", "estadoMantenimiento"); break;
+                case TipoRegistro.Usuario:
+                    // Se agregan los combos opcionales para vincular Persona
+                    Agregar("IdCliente", "Vincular Cliente", "clienteAsociado", 0, false);
+                    Agregar("IdAgente", "Vincular Agente", "agenteAsociado", 0, false);
+                    Agregar("Nombre", "Nombre", "letras", 100);
+                    Agregar("Usuario", "Usuario", "usuario", 50);
+                    Agregar("Contrasena", "Contraseña", "clave", 50, idEditar == 0);
+                    Agregar("IdRol", "Rol", "rol");
+                    Agregar("IdEstado", "Estado", "estadoUsuario");
+                    break;
+
+                case TipoRegistro.Cliente:
+                    Agregar("Nombres", "Nombres", "letras", 100);
+                    Agregar("Apellidos", "Apellidos", "letras", 100);
+                    Agregar("DUI", "DUI", "dui", 10);
+                    Agregar("Telefono", "Teléfono", "telefono", 20);
+                    Agregar("Correo", "Correo", "correo", 100, false);
+                    Agregar("Direccion", "Dirección", "texto", 200);
+                    break;
+
+                case TipoRegistro.Agente:
+                    Agregar("Nombre", "Nombre", "letras", 100);
+                    Agregar("Apellido", "Apellido", "letras", 100);
+                    Agregar("Telefono", "Teléfono", "telefono", 20);
+                    Agregar("Correo", "Correo", "correo", 100);
+                    Agregar("Comision", "Comisión", "decimal");
+                    Agregar("IdEstado", "Estado", "estadoAgente");
+                    break;
+
+                case TipoRegistro.Propiedad:
+                    Agregar("IdTipoPropiedad", "Tipo", "tipoPropiedad");
+                    Agregar("Direccion", "Dirección", "texto", 200);
+                    Agregar("IdDepartamento", "Departamento", "departamento");
+                    Agregar("IdMunicipio", "Municipio", "municipio");
+                    Agregar("Precio", "Precio", "decimal");
+                    Agregar("IdEstado", "Estado", "estadoPropiedad");
+                    Agregar("Descripcion", "Descripción", "texto", 500, false);
+                    Agregar("FechaRegistro", "Fecha de registro", "fecha");
+                    break;
+
+                case TipoRegistro.Venta:
+                    Agregar("IdCliente", "Cliente", "cliente");
+                    Agregar("IdPropiedad", "Propiedad", "propiedad");
+                    Agregar("IdUsuario", "Usuario", "usuarioCombo");
+                    Agregar("FechaVenta", "Fecha de venta", "fecha");
+                    Agregar("PrecioVenta", "Precio de venta", "decimal");
+                    break;
+
+                case TipoRegistro.Alquiler:
+                    Agregar("IdCliente", "Cliente", "cliente");
+                    Agregar("IdPropiedad", "Propiedad", "propiedad");
+                    Agregar("IdUsuario", "Usuario", "usuarioCombo");
+                    Agregar("FechaInicio", "Fecha de inicio", "fecha");
+                    Agregar("FechaFin", "Fecha de finalización", "fecha");
+                    Agregar("PagoMensual", "Pago mensual", "decimal");
+                    break;
+
+                case TipoRegistro.Pago:
+                    Agregar("IdAlquiler", "Alquiler", "alquiler");
+                    Agregar("FechaPago", "Fecha de pago", "fecha");
+                    Agregar("Monto", "Monto", "decimal");
+                    Agregar("IdMetodoPago", "Método de pago", "metodoPago");
+                    Agregar("IdEstado", "Estado", "estadoPago");
+                    break;
+
+                case TipoRegistro.Cita:
+                    Agregar("IdCliente", "Cliente", "cliente");
+                    Agregar("IdAgente", "Agente", "agente");
+                    Agregar("IdPropiedad", "Propiedad", "propiedad");
+                    Agregar("Fecha", "Fecha", "fecha");
+                    Agregar("Hora", "Hora", "hora");
+                    Agregar("IdEstado", "Estado", "estadoCita");
+                    break;
+
+                default:
+                    Agregar("IdPropiedad", "Propiedad", "propiedad");
+                    Agregar("Descripcion", "Descripción", "texto", 200);
+                    Agregar("Fecha", "Fecha", "fecha");
+                    Agregar("Costo", "Costo", "decimal");
+                    Agregar("IdEstado", "Estado", "estadoMantenimiento");
+                    break;
             }
         }
 
@@ -55,19 +131,52 @@ namespace vistaa.GestioneNova
             pnlCampos.RowCount = campos.Count;
             for (int i = 0; i < campos.Count; i++)
             {
-                Campo c = campos[i]; Label l = new Label { Text = c.Etiqueta + ":", Font = new Font("Segoe UI", 11F, FontStyle.Bold), TextAlign = ContentAlignment.MiddleLeft, Dock = DockStyle.Fill };
-                c.Control = CrearControl(c); c.Control.Name = "ctrl" + c.Nombre; c.Control.TabIndex = i; c.Control.Dock = DockStyle.Fill; c.Control.Margin = new Padding(5, 8, 5, 8);
-                pnlCampos.RowStyles.Add(new RowStyle(SizeType.Absolute, 52F)); pnlCampos.Controls.Add(l, 0, i); pnlCampos.Controls.Add(c.Control, 1, i);
+                Campo c = campos[i];
+                Label l = new Label { Text = c.Etiqueta + ":", Font = new Font("Segoe UI", 11F, FontStyle.Bold), TextAlign = ContentAlignment.MiddleLeft, Dock = DockStyle.Fill };
+                c.Control = CrearControl(c);
+                c.Control.Name = "ctrl" + c.Nombre;
+                c.Control.TabIndex = i;
+                c.Control.Dock = DockStyle.Fill;
+                c.Control.Margin = new Padding(5, 8, 5, 8);
+
+                pnlCampos.RowStyles.Add(new RowStyle(SizeType.Absolute, 52F));
+                pnlCampos.Controls.Add(l, 0, i);
+                pnlCampos.Controls.Add(c.Control, 1, i);
             }
-            Campo campoDepartamento = campos.Find(campoBuscado => campoBuscado.Nombre == "IdDepartamento");
-            if (campoDepartamento != null) { ((ComboBox)campoDepartamento.Control).SelectedIndexChanged += DepartamentoCambiado; DepartamentoCambiado(campoDepartamento.Control, EventArgs.Empty); }
+
+            // Manejo de dependencias específicas (Departamentos)
+            Campo campoDepartamento = campos.Find(cb => cb.Nombre == "IdDepartamento");
+            if (campoDepartamento != null)
+            {
+                ((ComboBox)campoDepartamento.Control).SelectedIndexChanged += DepartamentoCambiado;
+                DepartamentoCambiado(campoDepartamento.Control, EventArgs.Empty);
+            }
+
+            // Manejo de eventos de autocompletado en Usuarios
+            if (tipo == TipoRegistro.Usuario)
+            {
+                Campo campoCliente = campos.Find(cb => cb.Nombre == "IdCliente");
+                Campo campoAgente = campos.Find(cb => cb.Nombre == "IdAgente");
+
+                if (campoCliente != null)
+                {
+                    ((ComboBox)campoCliente.Control).SelectedIndexChanged += ClienteSeleccionado;
+                }
+                if (campoAgente != null)
+                {
+                    ((ComboBox)campoAgente.Control).SelectedIndexChanged += AgenteSeleccionado;
+                }
+            }
         }
 
         private Control CrearControl(Campo c)
         {
             if (c.Tipo == "fecha") return new DateTimePicker { Format = DateTimePickerFormat.Short, MinDate = new DateTime(2000, 1, 1), MaxDate = new DateTime(2100, 12, 31) };
             if (c.Tipo == "hora") return new DateTimePicker { Format = DateTimePickerFormat.Time, ShowUpDown = true };
-            DataTable d = null; string v = "";
+
+            DataTable d = null;
+            string v = "";
+
             switch (c.Tipo)
             {
                 case "rol": d = Catalogos.Roles(); v = "IdRol"; break;
@@ -86,9 +195,75 @@ namespace vistaa.GestioneNova
                 case "agente": d = Catalogos.Agentes(); v = "IdAgente"; break;
                 case "alquiler": d = Catalogos.Alquileres(); v = "IdAlquiler"; break;
                 case "metodoPago": d = Catalogos.MetodosPago(); v = "IdMetodoPago"; break;
+
+                // Nuevos catálogos filtrados para asignación única de Usuario
+                case "clienteAsociado": d = Catalogos.ClientesSinUsuario(idEditar); v = "IdCliente"; break;
+                case "agenteAsociado": d = Catalogos.AgentesSinUsuario(idEditar); v = "IdAgente"; break;
             }
-            if (d != null) return new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, DataSource = d, DisplayMember = "Nombre", ValueMember = v };
-            TextBox t = new TextBox { MaxLength = c.Maximo > 0 ? c.Maximo : 30, UseSystemPasswordChar = c.Tipo == "clave", Tag = c.Tipo }; t.KeyPress += ValidarCaracter; t.KeyDown += BloquearPortapapeles; return t;
+
+            if (d != null)
+            {
+                ComboBox cmb = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, DataSource = d, DisplayMember = "Nombre", ValueMember = v };
+                if (c.Tipo == "clienteAsociado" || c.Tipo == "agenteAsociado") cmb.SelectedIndex = -1; // Iniciar sin selección
+                return cmb;
+            }
+
+            TextBox t = new TextBox { MaxLength = c.Maximo > 0 ? c.Maximo : 30, UseSystemPasswordChar = c.Tipo == "clave", Tag = c.Tipo };
+            t.KeyPress += ValidarCaracter;
+            t.KeyDown += BloquearPortapapeles;
+            return t;
+        }
+
+        private void ClienteSeleccionado(object sender, EventArgs e)
+        {
+            ComboBox cmbCliente = (ComboBox)sender;
+            if (cmbCliente.SelectedValue != null && int.TryParse(cmbCliente.SelectedValue.ToString(), out int idCliente) && idCliente > 0)
+            {
+                // Desactivar el de Agente para evitar doble selección
+                Campo campoAgente = campos.Find(cb => cb.Nombre == "IdAgente");
+                if (campoAgente != null)
+                {
+                    ComboBox cmbAgente = (ComboBox)campoAgente.Control;
+                    cmbAgente.SelectedIndexChanged -= AgenteSeleccionado;
+                    cmbAgente.SelectedIndex = -1;
+                    cmbAgente.SelectedIndexChanged += AgenteSeleccionado;
+                }
+
+                // Generar sugerencia de nombre y usuario
+                string usuarioSugerido = Usuario.SugerirUsuarioDesdeCliente(idCliente, out string nombreCompleto);
+
+                Campo campoNombre = campos.Find(cb => cb.Nombre == "Nombre");
+                Campo campoUsuario = campos.Find(cb => cb.Nombre == "Usuario");
+
+                if (campoNombre != null) campoNombre.Control.Text = nombreCompleto;
+                if (campoUsuario != null) campoUsuario.Control.Text = usuarioSugerido;
+            }
+        }
+
+        private void AgenteSeleccionado(object sender, EventArgs e)
+        {
+            ComboBox cmbAgente = (ComboBox)sender;
+            if (cmbAgente.SelectedValue != null && int.TryParse(cmbAgente.SelectedValue.ToString(), out int idAgente) && idAgente > 0)
+            {
+                // Desactivar el de Cliente para evitar doble selección
+                Campo campoCliente = campos.Find(cb => cb.Nombre == "IdCliente");
+                if (campoCliente != null)
+                {
+                    ComboBox cmbCliente = (ComboBox)campoCliente.Control;
+                    cmbCliente.SelectedIndexChanged -= ClienteSeleccionado;
+                    cmbCliente.SelectedIndex = -1;
+                    cmbCliente.SelectedIndexChanged += ClienteSeleccionado;
+                }
+
+                // Generar sugerencia de nombre y usuario
+                string usuarioSugerido = Usuario.SugerirUsuarioDesdeAgente(idAgente, out string nombreCompleto);
+
+                Campo campoNombre = campos.Find(cb => cb.Nombre == "Nombre");
+                Campo campoUsuario = campos.Find(cb => cb.Nombre == "Usuario");
+
+                if (campoNombre != null) campoNombre.Control.Text = nombreCompleto;
+                if (campoUsuario != null) campoUsuario.Control.Text = usuarioSugerido;
+            }
         }
 
         private void DepartamentoCambiado(object s, EventArgs e)
@@ -98,18 +273,21 @@ namespace vistaa.GestioneNova
             if (campoMunicipio == null || comboDepartamento.SelectedValue == null || comboDepartamento.SelectedValue is DataRowView) return;
             ComboBox comboMunicipio = (ComboBox)campoMunicipio.Control;
             comboMunicipio.DataSource = Catalogos.Municipios(Convert.ToInt32(comboDepartamento.SelectedValue));
-            comboMunicipio.DisplayMember = "Nombre"; comboMunicipio.ValueMember = "IdMunicipio";
+            comboMunicipio.DisplayMember = "Nombre";
+            comboMunicipio.ValueMember = "IdMunicipio";
         }
 
         private void ValidarCaracter(object s, KeyPressEventArgs e)
         {
-            string t = (string)((TextBox)s).Tag; if (char.IsControl(e.KeyChar)) return;
+            string t = (string)((TextBox)s).Tag;
+            if (char.IsControl(e.KeyChar)) return;
             if (t == "decimal" && !char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != '.') e.Handled = true;
             if (t == "letras" && !char.IsLetter(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-') e.Handled = true;
             if (t == "dui" && !char.IsDigit(e.KeyChar) && e.KeyChar != '-') e.Handled = true;
             if (t == "telefono" && !char.IsDigit(e.KeyChar) && e.KeyChar != '-' && e.KeyChar != ' ') e.Handled = true;
             if (t == "codigo" && !char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != '-') e.Handled = true;
         }
+
         private void BloquearPortapapeles(object s, KeyEventArgs e) { if (e.Control && (e.KeyCode == Keys.C || e.KeyCode == Keys.V || e.KeyCode == Keys.X)) { e.SuppressKeyPress = true; MessageBox.Show("Debe digitar la información."); } }
 
         private DataRow ObtenerRegistro()
@@ -139,10 +317,16 @@ namespace vistaa.GestioneNova
             v = new Dictionary<string, object>();
             foreach (Campo c in campos)
             {
-                if (c.Nombre == "IdDepartamento") continue; object x;
-                if (c.Control is ComboBox) x = ((ComboBox)c.Control).SelectedValue; else if (c.Control is DateTimePicker) x = c.Tipo == "hora" ? ((DateTimePicker)c.Control).Value.TimeOfDay : (object)((DateTimePicker)c.Control).Value.Date; else x = c.Control.Text.Trim();
+                if (c.Nombre == "IdDepartamento") continue;
+                object x;
+
+                if (c.Control is ComboBox) x = ((ComboBox)c.Control).SelectedValue;
+                else if (c.Control is DateTimePicker) x = c.Tipo == "hora" ? ((DateTimePicker)c.Control).Value.TimeOfDay : (object)((DateTimePicker)c.Control).Value.Date;
+                else x = c.Control.Text.Trim();
+
                 if (c.Obligatorio && (x == null || x == DBNull.Value || x.ToString() == "")) { MessageBox.Show("El campo " + c.Etiqueta + " es obligatorio."); c.Control.Focus(); return false; }
-                if (!c.Obligatorio && x.ToString() == "") x = DBNull.Value;
+                if (!c.Obligatorio && (x == null || x.ToString() == "")) x = DBNull.Value;
+
                 if (c.Tipo == "decimal" && x != DBNull.Value)
                 {
                     decimal n;
@@ -161,14 +345,18 @@ namespace vistaa.GestioneNova
                 if (c.Tipo == "telefono" && x.ToString().Replace("-", "").Replace(" ", "").Length < 8) { MessageBox.Show("Ingrese un teléfono válido."); c.Control.Focus(); return false; }
                 if (c.Tipo == "clave" && x != DBNull.Value && x.ToString().Length < 8) { MessageBox.Show("La contraseña debe tener al menos 8 caracteres."); c.Control.Focus(); return false; }
                 if (c.Tipo == "usuario" && x.ToString().Contains(" ")) { MessageBox.Show("El nombre de usuario no puede contener espacios."); c.Control.Focus(); return false; }
+
                 v[c.Nombre] = x;
             }
+
             if (tipo == TipoRegistro.Alquiler && (DateTime)v["FechaFin"] <= (DateTime)v["FechaInicio"]) { MessageBox.Show("La fecha final debe ser posterior a la fecha inicial."); return false; }
             if (tipo == TipoRegistro.Cita && (DateTime)v["Fecha"] < DateTime.Today) { MessageBox.Show("La cita no puede registrarse en una fecha pasada."); return false; }
             if (tipo == TipoRegistro.Venta && (DateTime)v["FechaVenta"] > DateTime.Today) { MessageBox.Show("La venta no puede registrarse con una fecha futura."); return false; }
             if (tipo == TipoRegistro.Pago && (DateTime)v["FechaPago"] > DateTime.Today) { MessageBox.Show("El pago no puede registrarse con una fecha futura."); return false; }
             if (tipo == TipoRegistro.Propiedad && (DateTime)v["FechaRegistro"] > DateTime.Today) { MessageBox.Show("La fecha de registro no puede ser futura."); return false; }
-            if (tipo == TipoRegistro.Usuario && idEditar > 0 && v["Contrasena"] == DBNull.Value) v.Remove("Contrasena"); return true;
+            if (tipo == TipoRegistro.Usuario && idEditar > 0 && v["Contrasena"] == DBNull.Value) v.Remove("Contrasena");
+
+            return true;
         }
 
         private void Guardar(Dictionary<string, object> v)
@@ -212,6 +400,12 @@ namespace vistaa.GestioneNova
             try { Guardar(v); MessageBox.Show(idEditar > 0 ? "Registro actualizado correctamente." : "Registro guardado correctamente."); DialogResult = DialogResult.OK; Close(); }
             catch (Exception ex) { MessageBox.Show("No se pudo guardar. Verifique que los datos no estén repetidos.\n\n" + ex.Message, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
+
         private void btnCancelar_Click(object s, EventArgs e) { Close(); }
+
+        private void pnlCampos_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
