@@ -11,27 +11,33 @@ GO
 USE GestionInmobiliaria;
 GO
 
+-- Se corrigió Roles1 por Roles
 CREATE TABLE Roles(
     IdRol INT IDENTITY PRIMARY KEY,
     Nombre VARCHAR(30) NOT NULL UNIQUE
 );
+GO
 
+-- Se corrigió Estados1 por Estados
 CREATE TABLE Estados(
     IdEstado INT IDENTITY PRIMARY KEY,
     TipoEntidad VARCHAR(30) NOT NULL,
     Nombre VARCHAR(30) NOT NULL,
     CONSTRAINT UQ_Estados UNIQUE(TipoEntidad, Nombre)
 );
+GO
 
 CREATE TABLE TiposPropiedad(
     IdTipoPropiedad INT IDENTITY PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL UNIQUE
 );
+GO
 
 CREATE TABLE Departamentos(
     IdDepartamento INT IDENTITY PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL UNIQUE
 );
+GO
 
 CREATE TABLE Municipios(
     IdMunicipio INT IDENTITY PRIMARY KEY,
@@ -40,11 +46,13 @@ CREATE TABLE Municipios(
     CONSTRAINT UQ_Municipio UNIQUE(IdDepartamento, Nombre),
     CONSTRAINT FK_Municipios_Departamentos FOREIGN KEY(IdDepartamento) REFERENCES Departamentos(IdDepartamento)
 );
+GO
 
 CREATE TABLE MetodosPago(
     IdMetodoPago INT IDENTITY PRIMARY KEY,
     Nombre VARCHAR(30) NOT NULL UNIQUE
 );
+GO
 
 CREATE TABLE Clientes(
     IdCliente INT IDENTITY PRIMARY KEY,
@@ -57,6 +65,7 @@ CREATE TABLE Clientes(
     IdEstado INT NOT NULL,
     CONSTRAINT FK_Clientes_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
 );
+GO
 
 CREATE TABLE Agentes(
     IdAgente INT IDENTITY PRIMARY KEY,
@@ -68,6 +77,7 @@ CREATE TABLE Agentes(
     IdEstado INT NOT NULL,
     CONSTRAINT FK_Agentes_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
 );
+GO
 
 CREATE TABLE Usuarios(
     IdUsuario INT IDENTITY PRIMARY KEY,
@@ -83,6 +93,7 @@ CREATE TABLE Usuarios(
     CONSTRAINT FK_Usuarios_Clientes FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente),
     CONSTRAINT FK_Usuarios_Agentes FOREIGN KEY(IdAgente) REFERENCES Agentes(IdAgente)
 );
+GO
 
 CREATE TABLE Propiedades(
     IdPropiedad INT IDENTITY PRIMARY KEY,
@@ -96,9 +107,9 @@ CREATE TABLE Propiedades(
     FechaRegistro DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
     CONSTRAINT FK_Propiedades_Tipos FOREIGN KEY(IdTipoPropiedad) REFERENCES TiposPropiedad(IdTipoPropiedad),
     CONSTRAINT FK_Propiedades_Municipios FOREIGN KEY(IdMunicipio) REFERENCES Municipios(IdMunicipio),
-<<<<<<< HEAD
     CONSTRAINT FK_Propiedades_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
 );
+GO
 
 CREATE TABLE Ventas(
     IdVenta INT IDENTITY PRIMARY KEY,
@@ -111,6 +122,7 @@ CREATE TABLE Ventas(
     CONSTRAINT FK_Ventas_Propiedades FOREIGN KEY(IdPropiedad) REFERENCES Propiedades(IdPropiedad) ON DELETE CASCADE,
     CONSTRAINT FK_Ventas_Usuarios FOREIGN KEY(IdUsuario) REFERENCES Usuarios(IdUsuario) ON DELETE CASCADE
 );
+GO
 
 CREATE TABLE Alquileres(
     IdAlquiler INT IDENTITY PRIMARY KEY,
@@ -125,6 +137,7 @@ CREATE TABLE Alquileres(
     CONSTRAINT FK_Alquileres_Propiedades FOREIGN KEY(IdPropiedad) REFERENCES Propiedades(IdPropiedad) ON DELETE CASCADE,
     CONSTRAINT FK_Alquileres_Usuarios FOREIGN KEY(IdUsuario) REFERENCES Usuarios(IdUsuario) ON DELETE CASCADE
 );
+GO
 
 CREATE TABLE Pagos(
     IdPago INT IDENTITY PRIMARY KEY,
@@ -137,6 +150,7 @@ CREATE TABLE Pagos(
     CONSTRAINT FK_Pagos_Metodos FOREIGN KEY(IdMetodoPago) REFERENCES MetodosPago(IdMetodoPago),
     CONSTRAINT FK_Pagos_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
 );
+GO
 
 CREATE TABLE Citas(
     IdCita INT IDENTITY PRIMARY KEY,
@@ -151,6 +165,7 @@ CREATE TABLE Citas(
     CONSTRAINT FK_Citas_Propiedades FOREIGN KEY(IdPropiedad) REFERENCES Propiedades(IdPropiedad) ON DELETE CASCADE,
     CONSTRAINT FK_Citas_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
 );
+GO
 
 CREATE TABLE Mantenimientos(
     IdMantenimiento INT IDENTITY PRIMARY KEY,
@@ -198,7 +213,6 @@ INSERT Usuarios(Nombre,Usuario,Contrasena,IdRol,IdEstado) VALUES
 ('Agente de prueba','agente','$2b$10$4A1LxM2Sv00CMrLvlWEcXuLb62pNnJGysVCNs/LAxb9OfZk9gBwf2',2,1),
 ('Cliente de prueba','cliente','$2b$10$jrbpLtN64qkkDNNmzJz7MOhUHDYTtC8lkKF3nNLqXmwQ4kBjTX2ru',3,1);
 
--- CORRECCIÓN: Se agrega IdEstado = 5 ('Cliente', 'Activo')
 INSERT Clientes(Nombres,Apellidos,DUI,Telefono,Correo,Direccion,IdEstado) VALUES
 ('Juan Jose','Ramirez Hernandez','01234567-1','7123-4567','juan@gmail.com','San Salvador', 5),
 ('Maria Beatriz','Santos Mejia','02345678-2','7234-5678','maria@gmail.com','Santa Tecla', 5);
@@ -240,7 +254,6 @@ GO
 DECLARE @i INT = 3;
 WHILE (SELECT COUNT(*) FROM Clientes) < 17
 BEGIN
-    -- CORRECCIÓN: Se agrega IdEstado = 5
     INSERT Clientes(Nombres,Apellidos,DUI,Telefono,Correo,Direccion,IdEstado)
     VALUES('Cliente '+CAST(@i AS VARCHAR),'Apellido '+CAST(@i AS VARCHAR),RIGHT('00000000'+CAST(10000000+@i AS VARCHAR),8)+'-'+CAST(@i%10 AS VARCHAR),'7000-'+RIGHT('0000'+CAST(@i AS VARCHAR),4),'cliente'+CAST(@i AS VARCHAR)+'@correo.com','Direccion del cliente '+CAST(@i AS VARCHAR), 5);
     SET @i=@i+1;
@@ -533,8 +546,6 @@ SELECT 'Alquileres',COUNT(*) FROM Alquileres UNION ALL SELECT 'Pagos',COUNT(*) F
 SELECT 'Citas',COUNT(*) FROM Citas UNION ALL SELECT 'Mantenimientos',COUNT(*) FROM Mantenimientos;
 GO
 
-<<<<<<< HEAD
-=======
 ALTER TABLE Mantenimientos
 ADD IdUsuario INT NULL
     CONSTRAINT FK_Mantenimientos_Usuarios FOREIGN KEY REFERENCES Usuarios(IdUsuario);
@@ -542,15 +553,10 @@ ADD IdUsuario INT NULL
 ALTER TABLE Agentes
 ADD IdUsuario INT NULL
     CONSTRAINT FK_Agentes_Usuarios FOREIGN KEY REFERENCES Usuarios(IdUsuario);
+GO
 
-    SELECT Codigo, COUNT(*) AS Repetidos
+SELECT Codigo, COUNT(*) AS Repetidos
 FROM Propiedades
 GROUP BY Codigo
 HAVING COUNT(*) > 1;
-
-ALTER TABLE Propiedades
-ADD CONSTRAINT UQ_Propiedades_Codigo UNIQUE (Codigo);
-=======
-    CONSTRAINT FK_Propiedades_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
->>>>>>> c93e92a6e311600b01a5e99d676c85661227dc68
->>>>>>> origin
+GO

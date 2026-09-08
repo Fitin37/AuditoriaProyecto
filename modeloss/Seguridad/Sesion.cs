@@ -86,24 +86,23 @@ namespace modeloss
             // Administrador: acceso total
             if (rol.Equals("Administrador", StringComparison.OrdinalIgnoreCase)) return true;
 
-<<<<<<< HEAD
+
             // Agente: puede ver/crear/editar pero no eliminar
             if (rol.Equals("Agente", StringComparison.OrdinalIgnoreCase) || EsAgente)
-=======
+
            
             // Agente: puede leer/crear/editar pero no eliminar globalmente
             if (rol.Equals("Agente", StringComparison.OrdinalIgnoreCase))
->>>>>>> origin
+
             {
                 if (acc == "eliminar") return false;
                 if (string.IsNullOrWhiteSpace(tabla)) return acc != "eliminar";
                 string t = tabla.ToLowerInvariant();
-<<<<<<< HEAD
+
                 if (t.Contains("propiedad") || t.Contains("cliente") || t.Contains("venta") ||
                     t.Contains("alquiler") || t.Contains("pago") || t.Contains("cita") || t.Contains("mantenimiento"))
-=======
                 if (t.Contains("propiedad") || t.Contains("cliente") || t.Contains("venta") || t.Contains("alquiler") || t.Contains("pago") || t.Contains("agente") || t.Contains("mantenimiento"))
->>>>>>> origin
+
                     return acc == "leer" || acc == "crear" || acc == "editar";
                 return acc == "leer";
             }

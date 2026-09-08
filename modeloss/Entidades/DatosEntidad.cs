@@ -31,6 +31,19 @@ namespace modeloss.Entidades
             }
         }
 
+        // Overload to allow queries that expect an integer parameter named @id
+        public static DataTable Consultar(string consulta, int id)
+        {
+            using (SqlConnection conexion = new SqlConnection(modeloss.Conexion_DB.Conexion_DB.CadenaConexion))
+            using (SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion))
+            {
+                adaptador.SelectCommand.Parameters.AddWithValue("@id", id);
+                DataTable tabla = new DataTable();
+                adaptador.Fill(tabla);
+                return tabla;
+            }
+        }
+
         public static DataRow Obtener(string tabla, string llave, int id)
         {
             string consulta = "SELECT * FROM " + tabla + " WHERE " + llave + " = @id";
@@ -265,5 +278,7 @@ namespace modeloss.Entidades
                 return tabla;
             }
         }
+
+
     }
 }

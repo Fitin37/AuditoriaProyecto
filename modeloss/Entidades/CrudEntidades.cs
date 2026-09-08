@@ -315,48 +315,14 @@ namespace modeloss.Entidades
         {
             DatosEntidad.Eliminar("Ventas", "IdVenta", id);
         }
+
+        public static DataTable ListarVenta(string buscar = "") => Listar(buscar);
+        public static void GuardarVenta(Dictionary<string, object> v) => Guardar(v);
+        public static void ActualizarVenta(int idEditar, Dictionary<string, object> v) => Actualizar(idEditar, v);
+        public static void EliminarVenta(int id) => Eliminar(id);
     }
 
-    public partial class Alquiler
-    {
-        public static DataTable Listar(string buscar = "")
-        {
-            return DatosEntidad.Consultar("SELECT a.IdAlquiler, c.Nombres+' '+c.Apellidos AS Cliente, p.Codigo AS Propiedad, u.Nombre AS Usuario, a.FechaInicio AS [Fecha de inicio], a.FechaFin AS [Fecha de fin], a.PagoMensual AS [Pago mensual] FROM Alquileres a INNER JOIN Clientes c ON a.IdCliente=c.IdCliente INNER JOIN Propiedades p ON a.IdPropiedad=p.IdPropiedad INNER JOIN Usuarios u ON a.IdUsuario=u.IdUsuario WHERE c.Nombres LIKE @buscar OR c.Apellidos LIKE @buscar OR p.Codigo LIKE @buscar OR u.Nombre LIKE @buscar", buscar);
-        }
 
-        public static DataRow Obtener(int id) { return DatosEntidad.Obtener("Alquileres", "IdAlquiler", id); }
-
-        public static void ValidarServidor(Dictionary<string, object> v, int id = 0)
-        {
-            if (!v.ContainsKey("IdCliente") || v["IdCliente"] == null || Convert.ToInt32(v["IdCliente"]) <= 0) throw new Exception("Seleccione un cliente válido.");
-            if (!v.ContainsKey("IdPropiedad") || v["IdPropiedad"] == null || Convert.ToInt32(v["IdPropiedad"]) <= 0) throw new Exception("Seleccione una propiedad válida.");
-            if (v.ContainsKey("PagoMensual") && v["PagoMensual"] != null && Convert.ToDecimal(v["PagoMensual"]) <= 0) throw new Exception("El pago mensual debe ser mayor a cero.");
-
-            if (v.ContainsKey("FechaInicio") && v.ContainsKey("FechaFin") && v["FechaInicio"] != null && v["FechaFin"] != null && v["FechaInicio"] != DBNull.Value && v["FechaFin"] != DBNull.Value)
-            {
-                DateTime inicio = Convert.ToDateTime(v["FechaInicio"]);
-                DateTime fin = Convert.ToDateTime(v["FechaFin"]);
-                if (fin <= inicio) throw new Exception("La fecha de fin debe ser posterior a la fecha de inicio.");
-            }
-        }
-
-        public static void Guardar(Dictionary<string, object> v)
-        {
-            ValidarServidor(v, 0);
-            DatosEntidad.Guardar("Alquileres", v);
-        }
-
-        public static void Actualizar(int id, Dictionary<string, object> v)
-        {
-            ValidarServidor(v, id);
-            DatosEntidad.Actualizar("Alquileres", "IdAlquiler", id, v);
-        }
-
-        public static void Eliminar(int id)
-        {
-            DatosEntidad.Eliminar("Alquileres", "IdAlquiler", id);
-        }
-    }
 
     public partial class Pago
     {
@@ -483,12 +449,22 @@ namespace modeloss.Entidades
         public static DataTable Estados(string tipo) { return DatosEntidad.Consultar("SELECT IdEstado, Nombre FROM Estados WHERE TipoEntidad LIKE @buscar ORDER BY Nombre", tipo); }
         public static DataTable TiposPropiedad() { return DatosEntidad.Catalogo("SELECT IdTipoPropiedad, Nombre FROM TiposPropiedad ORDER BY Nombre"); }
         public static DataTable Departamentos() { return DatosEntidad.Catalogo("SELECT IdDepartamento, Nombre FROM Departamentos ORDER BY Nombre"); }
-        public static DataTable Municipios(int idDepartamento) { return DatosEntidad.Consultar("SELECT IdMunicipio, Nombre FROM Municipios WHERE IdDepartamento=@id ORDER BY Nombre", idDepartamento); }
+        public static DataTable Municipios(int idDepartamento) => DatosEntidad.Consultar("SELECT IdMunicipio, Nombre FROM Municipios WHERE IdDepartamento=@id ORDER BY Nombre", idDepartamento);
         public static DataTable Clientes() { return DatosEntidad.Catalogo("SELECT IdCliente, Nombres+' '+Apellidos AS Nombre FROM Clientes ORDER BY Nombres"); }
         public static DataTable Propiedades() { return DatosEntidad.Catalogo("SELECT IdPropiedad, Codigo+' - '+Direccion AS Nombre FROM Propiedades ORDER BY Codigo"); }
         public static DataTable Usuarios() { return DatosEntidad.Catalogo("SELECT IdUsuario, Nombre FROM Usuarios ORDER BY Nombre"); }
         public static DataTable Agentes() { return DatosEntidad.Catalogo("SELECT IdAgente, Nombre+' '+Apellido AS Nombre FROM Agentes ORDER BY Nombre"); }
         public static DataTable Alquileres() { return DatosEntidad.Catalogo("SELECT a.IdAlquiler, CAST(a.IdAlquiler AS VARCHAR)+' - '+c.Nombres+' - '+p.Codigo AS Nombre FROM Alquileres a INNER JOIN Clientes c ON a.IdCliente=c.IdCliente INNER JOIN Propiedades p ON a.IdPropiedad=p.IdPropiedad ORDER BY a.IdAlquiler"); }
         public static DataTable MetodosPago() { return DatosEntidad.Catalogo("SELECT IdMetodoPago, Nombre FROM MetodosPago ORDER BY Nombre"); }
+
+        public static DataTable AgentesSinUsuario(int idEditar)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static DataTable ClientesSinUsuario(int idEditar)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

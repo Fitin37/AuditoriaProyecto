@@ -49,5 +49,9 @@ namespace modeloss.Entidades
             }
             DatosEntidad.Eliminar("Alquileres", "IdAlquiler", id);
         }
+
+        public static DataTable Listar(string buscar = "") => ListarAlquiler1(buscar);
+        public static DataTable ListarAlquiler(string buscar = "") => ListarAlquiler1(buscar);
+        public static DataRow Obtener(int id) => ObtenerAlquiler1(id);
     }
 }

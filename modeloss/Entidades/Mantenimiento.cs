@@ -7,7 +7,7 @@ namespace modeloss.Entidades
 {
     public partial class Mantenimiento
     {
-<<<<<<< HEAD
+
         public int IdMantenimiento { get; set; }
         public int IdPropiedad { get; set; }
         public string Descripcion { get; set; }
@@ -15,7 +15,7 @@ namespace modeloss.Entidades
         public decimal Costo { get; set; }
         public int IdEstado { get; set; }
         public int IdUsuario { get; set; }
-=======
+
         public static DataTable ListarMantenimiento(string buscar = "") { return DatosEntidad.Consultar("SELECT m.IdMantenimiento, p.Codigo AS Propiedad, m.Descripcion, m.Fecha, m.Costo, e.Nombre AS Estado FROM Mantenimientos m INNER JOIN Propiedades p ON m.IdPropiedad=p.IdPropiedad INNER JOIN Estados e ON m.IdEstado=e.IdEstado WHERE p.Codigo LIKE @buscar OR m.Descripcion LIKE @buscar OR e.Nombre LIKE @buscar", buscar); }
         public static DataRow ObtenerMantenimiento(int id) { return DatosEntidad.Obtener("Mantenimientos", "IdMantenimiento", id); }
 
@@ -38,6 +38,6 @@ namespace modeloss.Entidades
         public static void GuardarMantenimiento(Dictionary<string, object> v) { ValidarServidor(v); DatosEntidad.Guardar("Mantenimientos", v); }
         public static void ActualizarMantenimiento(int id, Dictionary<string, object> v) { ValidarServidor(v); DatosEntidad.Actualizar("Mantenimientos", "IdMantenimiento", id, v); }
         public static void EliminarMantenimiento(int id) { DatosEntidad.Eliminar("Mantenimientos", "IdMantenimiento", id); }
->>>>>>> c93e92a6e311600b01a5e99d676c85661227dc68
+
     }
 }
