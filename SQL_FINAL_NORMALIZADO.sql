@@ -96,6 +96,7 @@ CREATE TABLE Propiedades(
     FechaRegistro DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
     CONSTRAINT FK_Propiedades_Tipos FOREIGN KEY(IdTipoPropiedad) REFERENCES TiposPropiedad(IdTipoPropiedad),
     CONSTRAINT FK_Propiedades_Municipios FOREIGN KEY(IdMunicipio) REFERENCES Municipios(IdMunicipio),
+<<<<<<< HEAD
     CONSTRAINT FK_Propiedades_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
 );
 
@@ -532,3 +533,24 @@ SELECT 'Alquileres',COUNT(*) FROM Alquileres UNION ALL SELECT 'Pagos',COUNT(*) F
 SELECT 'Citas',COUNT(*) FROM Citas UNION ALL SELECT 'Mantenimientos',COUNT(*) FROM Mantenimientos;
 GO
 
+<<<<<<< HEAD
+=======
+ALTER TABLE Mantenimientos
+ADD IdUsuario INT NULL
+    CONSTRAINT FK_Mantenimientos_Usuarios FOREIGN KEY REFERENCES Usuarios(IdUsuario);
+
+ALTER TABLE Agentes
+ADD IdUsuario INT NULL
+    CONSTRAINT FK_Agentes_Usuarios FOREIGN KEY REFERENCES Usuarios(IdUsuario);
+
+    SELECT Codigo, COUNT(*) AS Repetidos
+FROM Propiedades
+GROUP BY Codigo
+HAVING COUNT(*) > 1;
+
+ALTER TABLE Propiedades
+ADD CONSTRAINT UQ_Propiedades_Codigo UNIQUE (Codigo);
+=======
+    CONSTRAINT FK_Propiedades_Estados FOREIGN KEY(IdEstado) REFERENCES Estados(IdEstado)
+>>>>>>> c93e92a6e311600b01a5e99d676c85661227dc68
+>>>>>>> origin

@@ -212,18 +212,33 @@ namespace modeloss.Entidades
         }
 
         public static void Guardar(Dictionary<string, object> v) { ValidarServidor(v); DatosEntidad.Guardar("Agentes", v); }
-        public static void Actualizar(int id, Dictionary<string, object> v) { ValidarServidor(v); DatosEntidad.Actualizar("Agentes", "IdAgente", id, v); }
-        public static void Eliminar(int id) { DatosEntidad.Eliminar("Agentes", "IdAgente", id); }
-    }
 
-    public partial class Propiedad
-    {
-        public static DataTable Listar(string buscar = "")
+        public static void Actualizar(int id, Dictionary<string, object> v)
         {
-            return DatosEntidad.Consultar("SELECT p.IdPropiedad, p.Codigo, t.Nombre AS Tipo, p.Direccion, m.Nombre AS Municipio, d.Nombre AS Departamento, p.Precio, e.Nombre AS Estado, p.Descripcion, p.FechaRegistro AS [Fecha de registro] FROM Propiedades p INNER JOIN TiposPropiedad t ON p.IdTipoPropiedad=t.IdTipoPropiedad INNER JOIN Municipios m ON p.IdMunicipio=m.IdMunicipio INNER JOIN Departamentos d ON m.IdDepartamento=d.IdDepartamento INNER JOIN Estados e ON p.IdEstado=e.IdEstado WHERE p.Codigo LIKE @buscar OR t.Nombre LIKE @buscar OR p.Direccion LIKE @buscar OR m.Nombre LIKE @buscar OR d.Nombre LIKE @buscar", buscar);
+            ValidarServidor(v);
+            if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!DatosEntidad.EsPropietario("Agentes", "IdAgente", id, "IdUsuario", modeloss.Sesion.UsuarioId))
+                    throw new Exception("Solo puede editar su propio perfil de agente.");
+            }
+            DatosEntidad.Actualizar("Agentes", "IdAgente", id, v);
         }
 
-        public static DataRow Obtener(int id) { return DatosEntidad.Obtener("Propiedades", "IdPropiedad", id); }
+        public static void Eliminar(int id)
+        {
+            if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
+                throw new Exception("Solo un administrador puede eliminar agentes.");
+            DatosEntidad.Eliminar("Agentes", "IdAgente", id);
+        }
+    }
+    public partial class Propiedad
+    {
+        public static DataTable ListarPropiedad(string buscar = "") //solo cambia lo que se muestra en el grid; no afecta Obtener(id) porque ese método usa SELECT * sobre la tabla directamente, no esta consulta.
+        {
+            return DatosEntidad.Consultar("SELECT p.IdPropiedad AS [Id], p.Codigo, t.Nombre AS Tipo, p.Direccion, m.Nombre AS Municipio, d.Nombre AS Departamento, p.Precio, e.Nombre AS Estado, p.Descripcion, p.FechaRegistro AS [Fecha de registro] FROM Propiedades p INNER JOIN TiposPropiedad t ON p.IdTipoPropiedad=t.IdTipoPropiedad INNER JOIN Municipios m ON p.IdMunicipio=m.IdMunicipio INNER JOIN Departamentos d ON m.IdDepartamento=d.IdDepartamento INNER JOIN Estados e ON p.IdEstado=e.IdEstado WHERE p.Codigo LIKE @buscar OR t.Nombre LIKE @buscar OR p.Direccion LIKE @buscar OR m.Nombre LIKE @buscar OR d.Nombre LIKE @buscar", buscar);
+        }
+
+        public static DataRow ObtenerPropiedad(int id) { return DatosEntidad.Obtener("Propiedades", "IdPropiedad", id); }
 
         public static void ValidarServidor(Dictionary<string, object> v, int id = 0)
         {
@@ -278,6 +293,7 @@ namespace modeloss.Entidades
 
     public partial class Venta
     {
+<<<<<<< HEAD
         public static DataTable Listar(string buscar = "") { return DatosEntidad.Consultar("SELECT v.IdVenta, c.Nombres+' '+c.Apellidos AS Cliente, p.Codigo AS Propiedad, u.Nombre AS Usuario, v.FechaVenta AS [Fecha de venta], v.PrecioVenta AS [Precio de venta] FROM Ventas v INNER JOIN Clientes c ON v.IdCliente=c.IdCliente INNER JOIN Propiedades p ON v.IdPropiedad=p.IdPropiedad INNER JOIN Usuarios u ON v.IdUsuario=u.IdUsuario WHERE c.Nombres LIKE @buscar OR c.Apellidos LIKE @buscar OR p.Codigo LIKE @buscar OR u.Nombre LIKE @buscar", buscar); }
         public static DataRow Obtener(int id) { return DatosEntidad.Obtener("Ventas", "IdVenta", id); }
 
@@ -295,6 +311,12 @@ namespace modeloss.Entidades
         }
 
         public static void Actualizar(int id, Dictionary<string, object> v)
+=======
+        public static DataTable ListarVenta(string buscar = "") { return DatosEntidad.Consultar("SELECT v.IdVenta, c.Nombres+' '+c.Apellidos AS Cliente, p.Codigo AS Propiedad, u.Nombre AS Usuario, v.FechaVenta AS [Fecha de venta], v.PrecioVenta AS [Precio de venta] FROM Ventas v INNER JOIN Clientes c ON v.IdCliente=c.IdCliente INNER JOIN Propiedades p ON v.IdPropiedad=p.IdPropiedad INNER JOIN Usuarios u ON v.IdUsuario=u.IdUsuario WHERE c.Nombres LIKE @buscar OR c.Apellidos LIKE @buscar OR p.Codigo LIKE @buscar OR u.Nombre LIKE @buscar", buscar); }
+        public static DataRow ObtenerVenta (int id) { return DatosEntidad.Obtener("Ventas", "IdVenta", id); }
+        public static void GuardarVenta(Dictionary<string, object> v) { DatosEntidad.Guardar("Ventas", v); }
+        public static void ActualizarVenta(int id, Dictionary<string, object> v)
+>>>>>>> origin
         {
             ValidarServidor(v);
             if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
@@ -305,7 +327,7 @@ namespace modeloss.Entidades
             DatosEntidad.Actualizar("Ventas", "IdVenta", id, v);
         }
 
-        public static void Eliminar(int id)
+        public static void EliminarVenta(int id)
         {
             if (!modeloss.Sesion.TienePermiso("Ventas", "Eliminar", modeloss.Sesion.UsuarioId)) throw new Exception("Su rol no tiene permisos para eliminar esta venta.");
             if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
@@ -318,6 +340,7 @@ namespace modeloss.Entidades
 
     public partial class Alquiler
     {
+<<<<<<< HEAD
         public static DataTable Listar(string buscar = "") { return DatosEntidad.Consultar("SELECT a.IdAlquiler, c.Nombres+' '+c.Apellidos AS Cliente, p.Codigo AS Propiedad, u.Nombre AS Usuario, a.FechaInicio AS [Fecha de inicio], a.FechaFin AS [Fecha de fin], a.PagoMensual AS [Pago mensual] FROM Alquileres a INNER JOIN Clientes c ON a.IdCliente=c.IdCliente INNER JOIN Propiedades p ON a.IdPropiedad=p.IdPropiedad INNER JOIN Usuarios u ON a.IdUsuario=u.IdUsuario WHERE c.Nombres LIKE @buscar OR c.Apellidos LIKE @buscar OR p.Codigo LIKE @buscar OR u.Nombre LIKE @buscar", buscar); }
         public static DataRow Obtener(int id) { return DatosEntidad.Obtener("Alquileres", "IdAlquiler", id); }
 
@@ -342,6 +365,12 @@ namespace modeloss.Entidades
         }
 
         public static void Actualizar(int id, Dictionary<string, object> v)
+=======
+        public static DataTable ListarAlquiler(string buscar = "") { return DatosEntidad.Consultar("SELECT a.IdAlquiler, c.Nombres+' '+c.Apellidos AS Cliente, p.Codigo AS Propiedad, u.Nombre AS Usuario, a.FechaInicio AS [Fecha de inicio], a.FechaFin AS [Fecha de fin], a.PagoMensual AS [Pago mensual] FROM Alquileres a INNER JOIN Clientes c ON a.IdCliente=c.IdCliente INNER JOIN Propiedades p ON a.IdPropiedad=p.IdPropiedad INNER JOIN Usuarios u ON a.IdUsuario=u.IdUsuario WHERE c.Nombres LIKE @buscar OR c.Apellidos LIKE @buscar OR p.Codigo LIKE @buscar OR u.Nombre LIKE @buscar", buscar); }
+        public static DataRow ObtenerAlquiler(int id) { return DatosEntidad.Obtener("Alquileres", "IdAlquiler", id); }
+        public static void GuardarAlquiler(Dictionary<string, object> v) { DatosEntidad.Guardar("Alquileres", v); }
+        public static void ActualizarAlquiler(int id, Dictionary<string, object> v)
+>>>>>>> origin
         {
             ValidarServidor(v);
             if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
@@ -352,7 +381,7 @@ namespace modeloss.Entidades
             DatosEntidad.Actualizar("Alquileres", "IdAlquiler", id, v);
         }
 
-        public static void Eliminar(int id)
+        public static void EliminarAlquiler(int id)
         {
             if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
             {
@@ -469,11 +498,34 @@ namespace modeloss.Entidades
     {
         public static DataTable Listar(string buscar = "") { return DatosEntidad.Consultar("SELECT m.IdMantenimiento, p.Codigo AS Propiedad, m.Descripcion, m.Fecha, m.Costo, e.Nombre AS Estado FROM Mantenimientos m INNER JOIN Propiedades p ON m.IdPropiedad=p.IdPropiedad INNER JOIN Estados e ON m.IdEstado=e.IdEstado WHERE p.Codigo LIKE @buscar OR m.Descripcion LIKE @buscar OR e.Nombre LIKE @buscar", buscar); }
         public static DataRow Obtener(int id) { return DatosEntidad.Obtener("Mantenimientos", "IdMantenimiento", id); }
-        public static void Guardar(Dictionary<string, object> v) { DatosEntidad.Guardar("Mantenimientos", v); }
-        public static void Actualizar(int id, Dictionary<string, object> v) { DatosEntidad.Actualizar("Mantenimientos", "IdMantenimiento", id, v); }
-        public static void Eliminar(int id) { DatosEntidad.Eliminar("Mantenimientos", "IdMantenimiento", id); }
-    }
 
+        public static void Guardar(Dictionary<string, object> v)
+        {
+            // Sella el registro con el usuario que lo crea, para que el ownership funcione después
+            v["IdUsuario"] = modeloss.Sesion.UsuarioId;
+            DatosEntidad.Guardar("Mantenimientos", v);
+        }
+
+        public static void Actualizar(int id, Dictionary<string, object> v)
+        {
+            if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!DatosEntidad.EsPropietario("Mantenimientos", "IdMantenimiento", id, "IdUsuario", modeloss.Sesion.UsuarioId))
+                    throw new Exception("No tiene permisos para editar este mantenimiento.");
+            }
+            DatosEntidad.Actualizar("Mantenimientos", "IdMantenimiento", id, v);
+        }
+
+        public static void Eliminar(int id)
+        {
+            if (!string.Equals(modeloss.Sesion.Rol, "Administrador", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!DatosEntidad.EsPropietario("Mantenimientos", "IdMantenimiento", id, "IdUsuario", modeloss.Sesion.UsuarioId))
+                    throw new Exception("No tiene permisos para eliminar este mantenimiento.");
+            }
+            DatosEntidad.Eliminar("Mantenimientos", "IdMantenimiento", id);
+        }
+    }
     public static class Catalogos
     {
         public static DataTable Roles() { return DatosEntidad.Catalogo("SELECT IdRol, Nombre FROM Roles ORDER BY Nombre"); }
