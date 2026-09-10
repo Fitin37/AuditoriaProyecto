@@ -6,7 +6,7 @@ namespace modeloss.Conexion_DB
     public static class Conexion_DB
     {
 
-        private const string Servidor = ".\\SQLEXPRESS";
+        private const string Servidor = "DESKTOP-RQ1A8V8";
 
       
 

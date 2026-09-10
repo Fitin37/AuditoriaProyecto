@@ -9,23 +9,42 @@ namespace modeloss.Entidades
     {
         public static DataTable ListarAlquiler1(string buscar = "") { return DatosEntidad.Consultar("SELECT a.IdAlquiler, c.Nombres+' '+c.Apellidos AS Cliente, p.Codigo AS Propiedad, u.Nombre AS Usuario, a.FechaInicio AS [Fecha de inicio], a.FechaFin AS [Fecha de fin], a.PagoMensual AS [Pago mensual] FROM Alquileres a INNER JOIN Clientes c ON a.IdCliente=c.IdCliente INNER JOIN Propiedades p ON a.IdPropiedad=p.IdPropiedad INNER JOIN Usuarios u ON a.IdUsuario=u.IdUsuario WHERE c.Nombres LIKE @buscar OR c.Apellidos LIKE @buscar OR p.Codigo LIKE @buscar OR u.Nombre LIKE @buscar", buscar); }
         public static DataRow ObtenerAlquiler1(int id) { return DatosEntidad.Obtener("Alquileres", "IdAlquiler", id); }
-    
-        public static void ValidarServidor(Dictionary<string, object> v)
+
+        public static void ValidarServidor(Dictionary<string, object> v, int id = 0)
         {
-            if (!v.ContainsKey("IdCliente") || Convert.ToInt32(v["IdCliente"]) <= 0) throw new Exception("Seleccione un cliente válido.");
-            if (!v.ContainsKey("IdPropiedad") || Convert.ToInt32(v["IdPropiedad"]) <= 0) throw new Exception("Seleccione una propiedad válida.");
-            if (!v.ContainsKey("IdUsuario") || Convert.ToInt32(v["IdUsuario"]) <= 0) throw new Exception("El usuario responsable es obligatorio.");
+            if (!v.ContainsKey("IdTipoPropiedad") || v["IdTipoPropiedad"] == null || Convert.ToInt32(v["IdTipoPropiedad"]) <= 0)
+                throw new Exception("Seleccione un tipo de propiedad válido.");
 
-            if (!v.ContainsKey("FechaInicio") || v["FechaInicio"] == DBNull.Value) throw new Exception("La fecha de inicio es obligatoria.");
-            if (!v.ContainsKey("FechaFin") || v["FechaFin"] == DBNull.Value) throw new Exception("La fecha de fin es obligatoria.");
+            if (!v.ContainsKey("Direccion") || string.IsNullOrWhiteSpace(Convert.ToString(v["Direccion"])))
+                throw new Exception("La dirección es obligatoria.");
 
-            DateTime inicio = Convert.ToDateTime(v["FechaInicio"]);
-            DateTime fin = Convert.ToDateTime(v["FechaFin"]);
-            if (!ValidacionHelper.FechaMayorQue(inicio, fin)) throw new Exception("La fecha de fin debe ser posterior a la fecha de inicio.");
+            if (!v.ContainsKey("IdMunicipio") || v["IdMunicipio"] == null || Convert.ToInt32(v["IdMunicipio"]) <= 0)
+                throw new Exception("Seleccione un municipio válido.");
 
-            if (!v.ContainsKey("PagoMensual") || v["PagoMensual"] == DBNull.Value) throw new Exception("El pago mensual es obligatorio.");
-            decimal pago = Convert.ToDecimal(v["PagoMensual"]);
-            if (!ValidacionHelper.EsNumeroPositivo(pago)) throw new Exception("El pago mensual debe ser mayor que cero.");
+            if (!v.ContainsKey("Precio") || v["Precio"] == null || v["Precio"] == DBNull.Value)
+                throw new Exception("El precio es obligatorio.");
+            decimal precio = Convert.ToDecimal(v["Precio"]);
+            if (precio <= 0) throw new Exception("El precio debe ser mayor que cero.");
+
+            if (!v.ContainsKey("IdEstado") || v["IdEstado"] == null || Convert.ToInt32(v["IdEstado"]) <= 0)
+                throw new Exception("Seleccione un estado válido.");
+
+            if (!v.ContainsKey("FechaRegistro") || v["FechaRegistro"] == null || v["FechaRegistro"] == DBNull.Value)
+                throw new Exception("La fecha de registro es obligatoria.");
+            DateTime f = Convert.ToDateTime(v["FechaRegistro"]);
+            if (f > DateTime.Today) throw new Exception("La fecha de registro no puede ser futura.");
+
+            if (v.ContainsKey("Codigo") && v["Codigo"] != null && v["Codigo"] != DBNull.Value)
+            {
+                string codigo = Convert.ToString(v["Codigo"]);
+                if (string.IsNullOrWhiteSpace(codigo)) throw new Exception("El código de la propiedad no puede estar vacío.");
+
+                bool unico = (id == 0)
+                    ? ValidacionHelper.EsCodigoUnico("Propiedades", "Codigo", codigo)
+                    : ValidacionHelper.EsCodigoUnico("Propiedades", "Codigo", codigo, "IdPropiedad", id);
+
+                if (!unico) throw new Exception("El código de la propiedad ya existe.");
+            }
         }
 
         public static void Guardar(Dictionary<string, object> v) { ValidarServidor(v); DatosEntidad.Guardar("Alquileres", v); }

@@ -459,12 +459,27 @@ namespace modeloss.Entidades
 
         public static DataTable AgentesSinUsuario(int idEditar)
         {
-            throw new NotImplementedException();
+            // Igual que ClientesSinUsuario pero para Agentes.
+            string sql = @"SELECT a.IdAgente, (ISNULL(a.Nombre,'') + ' ' + ISNULL(a.Apellido,'')) AS Nombre
+FROM Agentes a
+WHERE a.IdAgente NOT IN (SELECT ISNULL(IdAgente,0) FROM Usuarios WHERE IdAgente IS NOT NULL)
+OR a.IdAgente = @id
+ORDER BY Nombre";
+
+            return DatosEntidad.Consultar(sql, idEditar);
         }
 
         public static DataTable ClientesSinUsuario(int idEditar)
         {
-            throw new NotImplementedException();
+            // Devuelve clientes que no tienen un usuario asociado.
+            // Se incluye idEditar para que el cliente ya vinculado no desaparezca al editar.
+            string sql = @"SELECT c.IdCliente, (ISNULL(c.Nombres,'') + ' ' + ISNULL(c.Apellidos,'')) AS Nombre
+FROM Clientes c
+WHERE c.IdCliente NOT IN (SELECT ISNULL(IdCliente,0) FROM Usuarios WHERE IdCliente IS NOT NULL)
+OR c.IdCliente = @id
+ORDER BY Nombre";
+
+            return DatosEntidad.Consultar(sql, idEditar);
         }
     }
 }
